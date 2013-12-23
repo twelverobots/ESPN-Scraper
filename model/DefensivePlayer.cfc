@@ -32,4 +32,12 @@ component mappedSuperClass="true" accessors="true" implements="IPlayer" {
 
         return this;
     }
+
+    public String function getCleanName(){
+        return listFirst(getName(), ' ');
+    }
+
+    public String function getTeam(){
+        return "";
+    }
 }

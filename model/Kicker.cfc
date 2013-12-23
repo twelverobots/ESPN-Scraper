@@ -37,4 +37,17 @@ component accessors="true" implements="IPlayer" {
     public numeric function getFG() {
         return getShortFG() + getMediumFG() + getLongFG();
     }
+
+    public String function getCleanName(){
+        return REReplace(listFirst(getName() ), "[^ a-zA-Z\']", "", "ALL");
+    }
+
+    public String function getTeam(){
+        var str = trim(listLast( getName() ));
+        var subEx = REFind( "[a-zA-Z]{2,3}", str, 1, true);
+        if( arraylen( subEx.len ) ){
+           str =  mid( str, subEx.pos[1], subEx.len[1] ); 
+        }
+        return str;
+    }
 }
