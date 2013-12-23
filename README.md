@@ -7,7 +7,7 @@ Created By: Jason Dean (https://github.com/twelverobots) and Scott Stroz (https:
 
 TODOS:
 
-- Add Seasonal Scoring 
+- Add Seasonal Data
 - Add Matchup Data
 - Find teamIDs dynamically based on LeagueID and Season
 - Add BasePlayer.cfc for common methods
