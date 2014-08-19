@@ -5,3 +5,9 @@ dist
 app/bower_components
 .idea
 *.iml
+/aspnet_client
+/BIN
+/test.cfm
+/web.config
+/WEB-INF
+/lib
