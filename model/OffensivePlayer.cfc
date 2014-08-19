@@ -57,14 +57,25 @@ component mappedSuperClass="true" accessors="true" implements="IPlayer" {
     }
 
     public String function getCleanName(){
-        return REReplace(listFirst(getName() ), "[^ a-zA-Z\']", "", "ALL");
+
+        if (getName() CONTAINS "TQB") {
+            return rematch("[A-Za-z0-9]*", getName())[1];
+        } else {
+            return rematch("[A-Za-z0-9]*", getName())[1] & " " & rematch("[A-Za-z0-9]*", getName())[2];
+        }
+
+        return REReplace(listFirst(getName() ), "[^a-zA-Z0-9]*", "", "ALL");
     }
 
     public String function getTeam(){
-        var str = trim(listLast( getName() ));
-        var subEx = REFind( "[a-zA-Z]{2,3}", str, 1, true);
-        if( arraylen( subEx.len ) ){
-           str =  mid( str, subEx.pos[1], subEx.len[1] ); 
+        if (getName() DOES NOT CONTAIN "TQB") {
+            var str = trim(listLast(getName()));
+            var subEx = REFind("[a-zA-Z0-9]{2,10}", str, 1, true);
+            if (arraylen(subEx.len)) {
+                str = mid(str, subEx.pos[1], subEx.len[1]);
+            }
+        } else {
+            return "";
         }
         return str;
     }

@@ -27,11 +27,10 @@
 --->
 <cfsilent>
     <cfparam name="URL.leagueID" default="" />
-    <cfparam name="URL.season" default="2013" />
+    <cfparam name="URL.season" default="#year(now())#" />
     <cfparam name="URL.week" default="1" />
 
     <cfset leagueID = listFirst(URL.leagueID, "_") />
-    <cfset teamList = listLast(urlDecode(URL.leagueID), "_") />
 </cfsilent>
 
 
@@ -53,15 +52,16 @@
     <form class="navbar-form navbar-left" role="form" action="#cgi.SCRIPT_NAME#" method="get" >
       <div class="form-group">
         <label for="league">League: </label>
+
         <select name="leagueID" id="league" class="form-control">
-            <option value="860205_1,2,3,4,7,10,13,15,16,17,18,19" <cfif leagueID EQ "860205">selected</cfif>>Silver Waffle</option>
-            <option value="183196_1,3,6,8,11,12,16,19,20,21" <cfif leagueID EQ "183196">selected</cfif>>9-Men and a Romo-Sexual</option>
+            <option value="860205" <cfif leagueID EQ "860205">selected</cfif>>Silver Waffle</option>
+            <option value="183196" <cfif leagueID EQ "183196">selected</cfif>>9-Men and a Romo-Sexual</option>
         </select>
       </div>
       <div class="form-group">
         <label for="season">Season: </label>
         <select name="season" id="season" class="form-control">
-            <cfloop from="#year(now())#" to="#year(now())-3#" step="-1" index="yearIndex">
+            <cfloop from="#year(now())#" to="#year(now())-1#" step="-1" index="yearIndex">
                 <option value="#yearIndex#" <cfif URL.season EQ yearIndex>selected</cfif>>#yearIndex#</option>
             </cfloop>
         </select>
@@ -84,18 +84,22 @@
 
 <cfif isNumeric(leagueID) AND isNumeric(URL.season) AND URL.season LTE year(now()) AND isNumeric(URL.week) AND URL.week LTE 17>
 
-    <cfset league = application.gateway.getLeague(leagueId=leagueID, season=url.season, week=url.week, teamList=teamList) />
+    <cfset league = application.gateway.getLeague(leagueId=leagueID, season=url.season, week=url.week) />
 
     <cfoutput>
+    <cfset highestScoreTeam = league.getHighestScore() />
+    <cfset lowestScoreTeam = league.getLowestScore() />
     <cfset passingYardsTeam = league.getMostPassingYards() />
     <cfset rushingYardsTeam = league.getMostRushingYards() />
     <cfset receivingYardsTeam = league.getMostReceivingYards() />
     <div class="jumbotron">
         <div class="container">
             <h3>Week #league.getWeek()#</h3>
-            <h4>Most Passing Yards: #passingYardsTeam.getTeamName()# (#passingYardsTeam.getPassingYards()#)</h4>
-            <h4>Most Rushing Yards: #rushingYardsTeam.getTeamName()# (#rushingYardsTeam.getRushingYards()#)</h4>
-            <h4>Most Receiving Yards: #receivingYardsTeam.getTeamName()# (#receivingYardsTeam.getReceivingYards()#)</h4>
+            <h4>Highest Score: #highestScoreTeam.getTeamName()# (#highestScoreTeam.getScore()# points)</h4>
+            <h4>Lowest Score: #lowestScoreTeam.getTeamName()# (#lowestScoreTeam.getScore()# points)</h4>
+            <h4>Most Passing Yards: #passingYardsTeam.getTeamName()# (#passingYardsTeam.getPassingYards()# yards)</h4>
+            <h4>Most Rushing Yards: #rushingYardsTeam.getTeamName()# (#rushingYardsTeam.getRushingYards()# yards)</h4>
+            <h4>Most Receiving Yards: #receivingYardsTeam.getTeamName()# (#receivingYardsTeam.getReceivingYards()# yards)</h4>
         </div>
     </div>
     <div class="container">
@@ -107,6 +111,7 @@
                 </cfif>
                     <div class="team-pod col-md-3 <cfif count neq 1 or count % 3 eq 1>col-md-offset-1</cfif>">
                         <h4>#teamIndex.getTeamName()#</h4>
+                        <h5>Record: #teamIndex.getRecord()#</h5>
                         <cfset playerIndex = "" />
                         
                         <table class="table table-striped table-hover table-condensed">

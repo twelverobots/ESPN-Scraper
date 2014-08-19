@@ -13,7 +13,21 @@ component accessors="true" {
         return this;
     }
 
-    public any function getLeague(leagueid, season, week, teamList) {
+    public any function getTeams(leagueid, season) {
+        doc = getRemoteService().getTeams(leagueid=arguments.leagueid, season=arguments.season);
+
+        var links = doc.select(".games-teams-btn li a");
+        var link ="";
+        var league_values = "";
+        for (link in links) {
+            league_values = listAppend(league_values, rematch("[0-9]+", link.attr("href"))[2]);
+        }
+
+        return league_values;
+
+    }
+
+    public any function getLeague(leagueid, season, week) {
 
         var teamIndex = 1;
         var doc = "";
@@ -29,6 +43,7 @@ component accessors="true" {
 
         league.setWeek(arguments.week);
         league.setLeagueID(arguments.leagueid);
+        var teamList = getTeams(arguments.leagueid, arguments.season);
 
         var all = [];
 
@@ -40,6 +55,7 @@ component accessors="true" {
 
             teamName = doc.select("##teamInfos")[1].child(0).child(0).child(1).child(0).child(0).text();
             tables = doc.select("##playertable_0")[1].parent().getElementsByClass("playerTableTable");
+            record = doc.select("##teamInfos")[1].child(0).child(0).child(1).childNodes()[8].text();
 
             all = [];
             bench = [];
@@ -53,6 +69,7 @@ component accessors="true" {
 
             var team = createObject("component", "model.Team").init();
             team.setTeamName(teamName);
+            team.setRecord(record);
 
             addPlayersToTeam(all, team);
             addPlayersToTeam(bench, team, true);
@@ -70,8 +87,7 @@ component accessors="true" {
         for (playerIndex=1; playerIndex <= arrayLen(playerData); playerIndex++) {
 
             var name = playerData[playerIndex].child(1).text();
-            name = reReplace(name, "[[:space:]]", "", "ALL");
-            name = reReplace(name, "&nbps;", "", "ALL");
+
             var position = "";
 
             if (NOT len(name) GTE 5) { continue; }
@@ -89,8 +105,6 @@ component accessors="true" {
             } else {
                 position = "K";
             }
-
-            name = replace(name, position, "", "all");
 
             var stats = playerData[playerIndex].getElementsByClass("playertableStat");
 
@@ -151,7 +165,7 @@ component accessors="true" {
             }
 
             player.setPosition(position);
-            player.setName(playerData[playerIndex].child(1).text());
+            player.setName(name);
 
             if (bench) {
                 team.addPlayerToBench(player);

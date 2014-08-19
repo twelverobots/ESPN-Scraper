@@ -76,4 +76,38 @@ component accessors="true" {
 
     }
 
+    public any function getHighestScore() {
+        var teamIndex = "";
+        var teams = getTeams();
+        var currentTeam = "";
+        var highestTeam = new model.Team();
+
+        for (teamIndex = 1; teamIndex <= arraylen(teams); teamIndex++) {
+            currentTeam = teams[teamIndex];
+
+            if (currentTeam.getScore() GT highestTeam.getScore()) {
+                highestTeam = currentTeam;
+            }
+        }
+
+        return highestTeam;
+    }
+
+    public any function getLowestScore() {
+        var teamIndex = "";
+        var teams = getTeams();
+        var currentTeam = "";
+
+        var lowestTeam = teams[1];
+
+        for (teamIndex = 1; teamIndex <= arraylen(teams); teamIndex++) {
+            currentTeam = teams[teamIndex];
+
+            if (currentTeam.getScore() LT lowestTeam.getScore()) {
+                lowestTeam = currentTeam;
+            }
+        }
+
+        return lowestTeam;
+    }
 }

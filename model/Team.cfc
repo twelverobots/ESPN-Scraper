@@ -9,6 +9,7 @@ component accessors="true" {
     property name="teamName";
     property name="roster" type="array";
     property name="bench" type="array";
+    property name="record";
 
     public any function init() {
         setRoster([]);
@@ -85,6 +86,11 @@ component accessors="true" {
         }
 
         return points;
+    }
+
+
+    public numeric function getScore() {
+        return getRosterPoints();
     }
 
     public numeric function getBenchPoints() {
