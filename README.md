@@ -9,6 +9,6 @@ TODOS:
 
 - Add Seasonal Data
 - Add Matchup Data
-- Find teamIDs dynamically based on LeagueID and Season
+- ~~Find teamIDs dynamically based on LeagueID and Season~~
 - Add BasePlayer.cfc for common methods
-- Fix Parsing for TQB and Numbers in name
+- ~~Fix Parsing for TQB and Numbers in name~~
