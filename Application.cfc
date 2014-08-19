@@ -26,6 +26,9 @@ component {
     }
 
     public void function onRequestStart() {
-        onApplicationStart();
+    	if( structKeyExists( url, 'reload' ) ){
+    		onApplicationStart();
+    	}
+        
     }
 }
