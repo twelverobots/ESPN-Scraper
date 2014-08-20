@@ -87,25 +87,17 @@ component accessors="true" {
         for (playerIndex=1; playerIndex <= arrayLen(playerData); playerIndex++) {
 
             var name = playerData[playerIndex].child(1).text();
-
-            var position = "";
+            
 
             if (NOT len(name) GTE 5) { continue; }
-
-            if (find("QB", name) OR find("TQB", name)) {
-                position = "QB";
-            } else if (find("RB", name)) {
-                position = "RB";
-            } else if (find("WR", name)) {
-                position = "WR";
-            } else if (find("TE", name)) {
-                position = "TE";
-            } else if (find("D/ST", name)) {
-                position = "D/ST";
-            } else {
-                position = "K";
-            }
-
+			name = replace( name, ',', '', 'ALL' );
+            name = reReplace( name, '[^a-zA-z\/\.]', ' ', 'ALL' );
+            name = listToArray( name, ' ' );
+            var position = name[ arrayLen( name ) ];
+            arrayDeleteAt( name, arrayLen( name ) );
+            var teamname = name[ arrayLen( name ) ];
+            arrayDeleteAt( name, arrayLen( name ) );
+            var playerName = arrayToList( name, ' ' );
             var stats = playerData[playerIndex].getElementsByClass("playertableStat");
 
             switch (position) {
@@ -129,7 +121,6 @@ component accessors="true" {
                 player.setFumbles(assureNumeric(stats[12].text()));
                 player.setOtherTD(assureNumeric(stats[13].text()));
                 player.setPoints(assureNumeric(stats[14].text()));
-
                 break;
             case "D/ST":
                 player = createObject("component", "model.DefensivePlayer").init();
@@ -165,7 +156,8 @@ component accessors="true" {
             }
 
             player.setPosition(position);
-            player.setName(name);
+            player.setName(playerName);
+            player.setTeam( teamname );
 
             if (bench) {
                 team.addPlayerToBench(player);

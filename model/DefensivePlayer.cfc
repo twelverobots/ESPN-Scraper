@@ -9,6 +9,7 @@ component mappedSuperClass="true" accessors="true" implements="IPlayer" {
 
     property name="name";
     property name="position";
+    property name="team";
     property name="touchdowns";
     property name="points";
     property name="interceptions";

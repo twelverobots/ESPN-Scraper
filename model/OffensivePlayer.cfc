@@ -9,6 +9,7 @@ component mappedSuperClass="true" accessors="true" implements="IPlayer" {
 
     property name="name";
     property name="position";
+    property name="team";
 
     property name="passingAttempts";
     property name="passingCompletions";
@@ -65,19 +66,6 @@ component mappedSuperClass="true" accessors="true" implements="IPlayer" {
         }
 
         return REReplace(listFirst(getName() ), "[^a-zA-Z0-9]*", "", "ALL");
-    }
-
-    public String function getTeam(){
-        if (getName() DOES NOT CONTAIN "TQB") {
-            var str = trim(listLast(getName()));
-            var subEx = REFind("[a-zA-Z0-9]{2,10}", str, 1, true);
-            if (arraylen(subEx.len)) {
-                str = mid(str, subEx.pos[1], subEx.len[1]);
-            }
-        } else {
-            return "";
-        }
-        return str;
     }
 
 }

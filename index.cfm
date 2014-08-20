@@ -35,7 +35,7 @@
 
 
 <cfoutput>
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-default" role="navigation">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="##bs-example-navbar-collapse-1">
@@ -92,6 +92,7 @@
     <cfset passingYardsTeam = league.getMostPassingYards() />
     <cfset rushingYardsTeam = league.getMostRushingYards() />
     <cfset receivingYardsTeam = league.getMostReceivingYards() />
+    <div class="container">
     <div class="jumbotron">
         <div class="container">
             <h3>Week #league.getWeek()#</h3>
@@ -127,7 +128,7 @@
                             <tbody>
                         <cfloop array="#teamIndex.getRoster()#" index="playerIndex">
                             <tr>
-                                <td>#playerIndex.getCleanName()#</td>
+                                <td>#playerIndex.getName()#</td>
                                 <td class="text-center">#playerIndex.getTeam()#</td>
                                 <td class="text-center">#playerIndex.getPosition()#</td>
                                 <td class="text-right">#numberFormat(playerIndex.getPoints(), '-999.0')#</td>
@@ -147,7 +148,7 @@
                             <tbody>
                         <cfloop array="#teamIndex.getBench()#" index="playerIndex">
                             <tr>
-                                <td>#playerIndex.getCleanName()#</td>
+                                <td>#playerIndex.getname()#</td>
                                 <td>#playerIndex.getTeam()#</td>
                                 <td class="text-center">#playerIndex.getPosition()#</td>
                                 <td class="text-right">#numberFormat(playerIndex.getPoints(), '-999.0')#</td>
@@ -186,6 +187,7 @@
         
     </div>
     </cfoutput>
+    </div>
 </cfif>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
