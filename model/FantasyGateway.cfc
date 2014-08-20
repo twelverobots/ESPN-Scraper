@@ -91,7 +91,7 @@ component accessors="true" {
 
             if (NOT len(name) GTE 5) { continue; }
 			name = replace( name, ',', '', 'ALL' );
-            name = reReplace( name, '[^a-zA-z\/\.]', ' ', 'ALL' );
+            name = reReplace( name, '[^a-zA-z\/\.\-]', ' ', 'ALL' );
             name = listToArray( name, ' ' );
             var position = name[ arrayLen( name ) ];
             arrayDeleteAt( name, arrayLen( name ) );
