@@ -56,7 +56,7 @@
 
         <select name="leagueID" id="league" class="form-control">
             <option value="860205" <cfif leagueID EQ "860205">selected</cfif>>Silver Waffle</option>
-            <option value="183196" <cfif leagueID EQ "183196">selected</cfif>>9-Men and a Romo-Sexual</option>
+            <option value="183196" <cfif leagueID EQ "183196">selected</cfif>>9 Men and a Romo-Sexual</option>
         </select>
       </div>
       <div class="form-group">
@@ -105,7 +105,7 @@
     <div class="container">
     <div class="jumbotron">
         <div class="container">
-            <h3>Week #league.getWeek()#</h3>
+            <h3>Week #league.getWeek()#  - #league.getLeagueName()#</h3>
             <h5><b>Highest Score:</b> #highestScoreTeam.getTeamName()# (#highestScoreTeam.getScore()# points)</h5>
             <h5><b>Lowest Score:</b> #lowestScoreTeam.getTeamName()# (#lowestScoreTeam.getScore()# points)</h5>
             <h5><b>Most Passing Yards:</b> #passingYardsTeam.getTeamName()# (#passingYardsTeam.getPassingYards()# yards)</h5>

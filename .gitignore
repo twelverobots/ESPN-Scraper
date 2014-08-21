@@ -11,3 +11,6 @@ app/bower_components
 /web.config
 /WEB-INF
 /lib
+/.settings
+/.project
+/settings.xml
