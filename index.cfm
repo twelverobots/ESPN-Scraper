@@ -99,20 +99,26 @@
     <cfset smallestMarginOfDefeatTeam = league.getSmallestMarginOfDefeat() />
     <cfset closeMatches = league.getCloseMatches( closeMatchDiff ) />
     <cfset losingStreaks = league.getLosingStreaks( losingStreak ) />
+    <cfset fewestPointsAllowedTeam = league.getFewestPointsAllowed() />
+    <cfset mostPointsAllowedTeam = league.getMostPointsAllowed() />
+    <cfset mostSacksTeam = league.getMostSacks() />
     <div class="container">
     <div class="jumbotron">
         <div class="container">
             <h3>Week #league.getWeek()#</h3>
-            <h4>Highest Score: #highestScoreTeam.getTeamName()# (#highestScoreTeam.getScore()# points)</h4>
-            <h4>Lowest Score: #lowestScoreTeam.getTeamName()# (#lowestScoreTeam.getScore()# points)</h4>
-            <h4>Most Passing Yards: #passingYardsTeam.getTeamName()# (#passingYardsTeam.getPassingYards()# yards)</h4>
-            <h4>Most Rushing Yards: #rushingYardsTeam.getTeamName()# (#rushingYardsTeam.getRushingYards()# yards)</h4>
-            <h4>Most Receiving Yards: #receivingYardsTeam.getTeamName()# (#receivingYardsTeam.getReceivingYards()# yards)</h4>
-            <h4>Largest Margin of Victory: #largestMarginOfVictoryTeam.getTeamName()# (#largestMarginOfVictoryTeam.getMargin()# points)</h4>
-            <h4>Largest Margin of Defeat: #largestMarginOfDefeatTeam.getTeamName()# (#largestMarginOfDefeatTeam.getMargin()# points)</h4>
-            <h4>Smallest Margin of Victory: #smallestMarginOfVictoryTeam.getTeamName()# (#smallestMarginOfVictoryTeam.getMargin()# points)</h4>
-            <h4>Smallest Margin of Defeat: #smallestMarginOfDefeatTeam.getTeamName()# (#smallestMarginOfDefeatTeam.getMargin()# points)</h4>
-            <h4>Teams that won or lost by less than #closeMatchDiff# point<cfif closeMatchDiff GT 1>s</cfif>: 
+            <h5><b>Highest Score:</b> #highestScoreTeam.getTeamName()# (#highestScoreTeam.getScore()# points)</h5>
+            <h5><b>Lowest Score:</b> #lowestScoreTeam.getTeamName()# (#lowestScoreTeam.getScore()# points)</h5>
+            <h5><b>Most Passing Yards:</b> #passingYardsTeam.getTeamName()# (#passingYardsTeam.getPassingYards()# yards)</h5>
+            <h5><b>Most Rushing Yards:</b> #rushingYardsTeam.getTeamName()# (#rushingYardsTeam.getRushingYards()# yards)</h5>
+            <h5><b>Most Receiving Yards:</b> #receivingYardsTeam.getTeamName()# (#receivingYardsTeam.getReceivingYards()# yards)</h5>
+            <h5><b>Fewest Points Allowed by Defense:</b> #fewestPointsAllowedTeam.getTeamName()# (#fewestPointsAllowedTeam.getPointsAllowed()#)</h5>
+            <h5><b>Most Points Allowed by Defense:</b> #mostPointsAllowedTeam.getTeamName()# (#mostPointsAllowedTeam.getPointsAllowed()#)</h5>
+            <h5><b>Most Sacks by Defense:</b> #mostSacksTeam.getTeamName()# (#mostSacksTeam.getSacks()#)</h5>
+            <h5><b>Largest Margin of Victory:</b> #largestMarginOfVictoryTeam.getTeamName()# (#largestMarginOfVictoryTeam.getMargin()# points)</h5>
+            <h5><b>Largest Margin of Defeat:</b> #largestMarginOfDefeatTeam.getTeamName()# (#largestMarginOfDefeatTeam.getMargin()# points)</h5>
+            <h5><b>Smallest Margin of Victory:</b> #smallestMarginOfVictoryTeam.getTeamName()# (#smallestMarginOfVictoryTeam.getMargin()# points)</h5>
+            <h5><b>Smallest Margin of Defeat:</b> #smallestMarginOfDefeatTeam.getTeamName()# (#smallestMarginOfDefeatTeam.getMargin()# points)</h5>
+            <h5><b>Teams that won or lost by less than #closeMatchDiff# point<cfif closeMatchDiff GT 1>s</cfif>:</b> 
             	<ul class="list-inline" id="close-match">
             	<cfif !arrayLen( closeMatches )>
             		<li>None</li>
@@ -121,8 +127,8 @@
             		<li>#team.getTeamName()# ( #team.getMargin()# )</li>
             	</cfloop>
             	</ul>
-            </h4>
-            <h4>Teams with #losingStreak# or more game losing streak: 
+            </h5>
+            <h5><b>Teams with #losingStreak# or more game losing streak:</b> 
             	<ul class="list-inline" id="close-match">
             	<cfif !arrayLen( losingStreaks )>
             		<li>None</li>
@@ -131,7 +137,7 @@
             		<li>#team.getTeamName()# ( #team.getStreak()# )</li>
             	</cfloop>
             	</ul>
-            </h4>
+            </h5>
         </div>
     </div>
     <div class="container">

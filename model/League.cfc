@@ -178,4 +178,37 @@ component accessors="true" {
     	}
     	return ret;
     }
+    
+    public any function getFewestPointsAllowed(){
+    	var teams = getTeams();
+    	var leastTeam = teams[ 1 ];
+    	for( var currentTeam in teams ){
+    		if( currentTeam.getPointsAllowed() < leastTeam.getPointsAllowed() ) {
+    			leastTeam = currentTeam;
+    		}
+    	}
+    	return leastTeam;
+    }
+    
+    public any function getMostPointsAllowed(){
+    	var teams = getTeams();
+    	var mostTeam = teams[ 1 ];
+    	for( var currentTeam in teams ){
+    		if( currentTeam.getPointsAllowed() > mostTeam.getPointsAllowed() ) {
+    			mostTeam = currentTeam;
+    		}
+    	}
+    	return mostTeam;
+    }
+    
+    public any function getMostSacks(){
+    	var teams = getTeams();
+    	var mostTeam = teams[ 1 ];
+    	for( var currentTeam in teams ){
+    		if( currentTeam.getSacks() > mostTeam.getSacks() ) {
+    			mostTeam = currentTeam;
+    		}
+    	}
+    	return mostTeam;
+    }
 }

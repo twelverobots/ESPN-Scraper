@@ -104,7 +104,7 @@ component accessors="true" {
 
             switch (position) {
 
-            case "RB": case "WR": case "TE": case "QB":
+            case "RB": case "WR": case "TE": case "QB": case "TQB":
                 player = createObject("component", "model.OffensivePlayer").init();
 
                 var attCompl = stats[1].text();

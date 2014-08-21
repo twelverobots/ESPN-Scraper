@@ -12,16 +12,28 @@ component accessors="true" {
     property name="record";
     property name="opponentScore";
     property name="streak";
+    property name="activeDefense";
+    property name="activeOffense" type="array";
+    property name="activeKicker";  
 
     public any function init() {
         setRoster([]);
         setBench([]);
-
+		setActiveOffense( [] );
         return this;
     }
 
     public void function addPlayerToRoster(IPlayer player) {
-
+		switch( player.getPosition() ){
+			case 'D/ST':
+			setActiveDefense( player );
+			break;
+			case 'K':
+			setActiveKicker( player );
+			break;
+			default:
+			arrayAppend( getActiveOffense(), player );
+		}
         arrayAppend(getRoster(), player);
 
     }
@@ -112,4 +124,13 @@ component accessors="true" {
 
         return points;
     }
+    
+    public numeric function getPointsAllowed(){
+    	return getActiveDefense().getPointsAllowed();
+    }
+    
+    public numeric function getSacks(){
+    	return getActiveDefense().getSacks();
+    }
+    
 }

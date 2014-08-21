@@ -18,6 +18,7 @@ component mappedSuperClass="true" accessors="true" implements="IPlayer" {
     property name="safeties";
     property name="blocks";
     property name="pointsAllowed";
+    property name="stuffs";
 
 
     public any function init() {
