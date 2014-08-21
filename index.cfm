@@ -29,10 +29,10 @@
     <cfparam name="URL.leagueID" default="" />
     <cfparam name="URL.season" default="#year(now())#" />
     <cfparam name="URL.week" default="1" />
+    <cfparam name="closeMatchDiff" default="1" >
 
     <cfset leagueID = listFirst(URL.leagueID, "_") />
 </cfsilent>
-
 
 <cfoutput>
 <nav class="navbar navbar-default" role="navigation">
@@ -92,6 +92,11 @@
     <cfset passingYardsTeam = league.getMostPassingYards() />
     <cfset rushingYardsTeam = league.getMostRushingYards() />
     <cfset receivingYardsTeam = league.getMostReceivingYards() />
+    <cfset largestMarginOfVictoryTeam = league.getLargestMarginOfVictory() />
+    <cfset largestMarginOfDefeatTeam = league.getLargestMarginOfDefeat() />
+    <cfset smallestMarginOfVictoryTeam = league.getSmallestMarginOfVictory() />
+    <cfset smallestMarginOfDefeatTeam = league.getSmallestMarginOfDefeat() />
+    <cfset closeMatches = league.getCloseMatches( closeMatchDiff ) />
     <div class="container">
     <div class="jumbotron">
         <div class="container">
@@ -101,6 +106,20 @@
             <h4>Most Passing Yards: #passingYardsTeam.getTeamName()# (#passingYardsTeam.getPassingYards()# yards)</h4>
             <h4>Most Rushing Yards: #rushingYardsTeam.getTeamName()# (#rushingYardsTeam.getRushingYards()# yards)</h4>
             <h4>Most Receiving Yards: #receivingYardsTeam.getTeamName()# (#receivingYardsTeam.getReceivingYards()# yards)</h4>
+            <h4>Largest Margin of Victory: #largestMarginOfVictoryTeam.getTeamName()# (#largestMarginOfVictoryTeam.getMargin()# points)</h4>
+            <h4>Largest Margin of Defeat: #largestMarginOfDefeatTeam.getTeamName()# (#largestMarginOfDefeatTeam.getMargin()# points)</h4>
+            <h4>Smallest Margin of Victory: #smallestMarginOfVictoryTeam.getTeamName()# (#smallestMarginOfVictoryTeam.getMargin()# points)</h4>
+            <h4>Smallest Margin of Defeat: #smallestMarginOfDefeatTeam.getTeamName()# (#smallestMarginOfDefeatTeam.getMargin()# points)</h4>
+            <h4>Teams that won or lost by less than #closeMatchDiff# point<cfif closeMatchDiff GT 1>s</cfif>: 
+            	<ul class="list-inline" id="close-match">
+            	<cfif !arrayLen( closeMatches )>
+            		<li>None</li>
+            	</cfif>
+            	<cfloop array="#closeMatches#" index="team" >
+            		<li>#team.getTeamName()# ( #team.getMargin()# )</li>
+            	</cfloop>
+            	</ul>
+            </h4>
         </div>
     </div>
     <div class="container">

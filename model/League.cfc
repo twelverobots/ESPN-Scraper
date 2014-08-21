@@ -110,4 +110,60 @@ component accessors="true" {
 
         return lowestTeam;
     }
+    
+    public any function getLargestMarginOfVictory(){
+    	var teams = getTeams();
+    	var highestTeam = teams[ 1 ];
+    	for( var currentTeam in teams ){
+    		if( currentTeam.getMargin() > highestTeam.getMargin()  ){
+    			highestTeam = currentTeam;
+    		}
+    	}
+    	
+    	return highestTeam;
+    }
+    
+    public any function getLargestMarginOfDefeat(){
+    	var teams = getTeams();
+    	var lowestTeam = teams[ 1 ];
+    	for( var currentTeam in teams ){
+    		if( currentTeam.getMargin() < lowestTeam.getMargin()  ){
+    			lowestTeam = currentTeam;
+    		}
+    	}
+    	
+    	return lowestTeam;
+    }
+    
+    public any function getSmallestMarginOfVictory(){
+    	var teams = getTeams();
+    	var smallestTeam = teams[ 1 ];
+    	for( var currentTeam in teams ){
+    		if( currentTeam.getMargin() > 0 && currentTeam.getMargin() < smallestTeam.getMargin()  ){
+    			smallestTeam = currentTeam;
+    		}
+    	}
+    	return smallestTeam;
+    }
+    
+    public any function getSmallestMarginOfDefeat(){
+    	var teams = getTeams();
+    	var smallestTeam = teams[ 1 ];
+    	for( var currentTeam in teams ){
+    		if( currentTeam.getMargin() < 0 && abs( currentTeam.getMargin() ) < abs( smallestTeam.getMargin() ) ){
+    			smallestTeam = currentTeam;
+    		}
+    	}
+    	return smallestTeam;
+    }
+    
+    public any function getCloseMatches( Numeric diff ){
+    	var ret = [];
+    	for( var team in getTeams() ){
+    		if( abs( team.getMargin() ) < diff ){
+    			arrayAppend( ret, team );
+    		}
+    	}
+    	return ret;
+    }
 }

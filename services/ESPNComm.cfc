@@ -57,7 +57,6 @@ component accessors="true" {
             cachePut(cacheKey, teamData, createTimespan(0,3,0,0));
 
         }
-
         return teamData;
 
 

@@ -48,7 +48,6 @@ component accessors="true" {
         var all = [];
 
         for (teamIndex = 1; teamIndex <= listLen(teamList); teamIndex++) {
-
             doc = getRemoteService().getTeamData(leagueid=arguments.leagueid, teamid=listGetAt(teamList, teamIndex), season=arguments.season, week=arguments.week);
 
             league.setLeagueName(doc.select(".nav-main-breadcrumbs")[1].child(2).text());
@@ -56,7 +55,8 @@ component accessors="true" {
             teamName = doc.select("##teamInfos")[1].child(0).child(0).child(1).child(0).child(0).text();
             tables = doc.select("##playertable_0")[1].parent().getElementsByClass("playerTableTable");
             record = doc.select("##teamInfos")[1].child(0).child(0).child(1).childNodes()[8].text();
-
+            var opponentScore = doc.select(".totalScore")[2].text();
+                        
             all = [];
             bench = [];
             for (tableIndex=1; tableIndex <= arrayLen(tables); tableIndex++) {
@@ -70,7 +70,7 @@ component accessors="true" {
             var team = createObject("component", "model.Team").init();
             team.setTeamName(teamName);
             team.setRecord(record);
-
+			team.setOpponentScore( opponentScore );
             addPlayersToTeam(all, team);
             addPlayersToTeam(bench, team, true);
 

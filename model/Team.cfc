@@ -10,6 +10,7 @@ component accessors="true" {
     property name="roster" type="array";
     property name="bench" type="array";
     property name="record";
+    property name="opponentScore";
 
     public any function init() {
         setRoster([]);
@@ -91,6 +92,10 @@ component accessors="true" {
 
     public numeric function getScore() {
         return getRosterPoints();
+    }
+    
+    public numeric function getMargin(){
+    	return getScore() - getOpponentScore();
     }
 
     public numeric function getBenchPoints() {
