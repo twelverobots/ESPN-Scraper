@@ -61,6 +61,30 @@ component accessors="true" {
 
 
     }
+    
+    public any function getStreak( leagueId, season ){
+    	var cacheKey = hash("streak" & leagueId & season );
+    	var streakData = cacheGet( cacheKey );
+    	if( isNull( streakData ) ){
+    		var httpService = new HTTP();
+			httpService.setMethod("get");
+			httpService.setCharset("utf-8");
+			httpService.setURL("http://games.espn.go.com/ffl/standings");
+			httpService.addParam(name="leagueId", type="url", value=leagueId);
+			httpService.addParam(name="seasonId", type="url", value=season);
+			
+			var result = httpService.send().getPrefix();
+			
+			var data = parser.parse(result.filecontent);
+			var rows = data.select( "##xstandTbl_div0 tr.sortableRow" );    
+		    for( var row in rows ){
+		    	key = trim( listFirst( row.child(0).text(), '(' ) ) ;
+		    	streakData[ key ] = row.child(6).text();
+		    }
+		    cachePut(cacheKey, streakData, createTimespan(0,3,0,0));
+    	}
+    	return streakData;
+    }
 
 }
 

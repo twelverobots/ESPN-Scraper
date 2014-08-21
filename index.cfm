@@ -30,6 +30,7 @@
     <cfparam name="URL.season" default="#year(now())#" />
     <cfparam name="URL.week" default="1" />
     <cfparam name="closeMatchDiff" default="1" >
+    <cfparam name="losingStreak" default="3" >
 
     <cfset leagueID = listFirst(URL.leagueID, "_") />
 </cfsilent>
@@ -97,6 +98,7 @@
     <cfset smallestMarginOfVictoryTeam = league.getSmallestMarginOfVictory() />
     <cfset smallestMarginOfDefeatTeam = league.getSmallestMarginOfDefeat() />
     <cfset closeMatches = league.getCloseMatches( closeMatchDiff ) />
+    <cfset losingStreaks = league.getLosingStreaks( losingStreak ) />
     <div class="container">
     <div class="jumbotron">
         <div class="container">
@@ -120,6 +122,16 @@
             	</cfloop>
             	</ul>
             </h4>
+            <h4>Teams with #losingStreak# or more game losing streak: 
+            	<ul class="list-inline" id="close-match">
+            	<cfif !arrayLen( losingStreaks )>
+            		<li>None</li>
+            	</cfif>
+            	<cfloop array="#losingStreaks#" index="team" >
+            		<li>#team.getTeamName()# ( #team.getStreak()# )</li>
+            	</cfloop>
+            	</ul>
+            </h4>
         </div>
     </div>
     <div class="container">
@@ -131,7 +143,8 @@
                 </cfif>
                     <div class="team-pod col-md-3 <cfif count neq 1 or count % 3 eq 1>col-md-offset-1</cfif>">
                         <h4>#teamIndex.getTeamName()#</h4>
-                        <h5>Record: #teamIndex.getRecord()#</h5>
+                        <h5>Record: #teamIndex.getRecord()# <cfif len(trim( teamIndex.getStreak() ) )> ( Current Streak:  #teamIndex.getStreak()# )</cfif></h5>
+                        
                         <cfset playerIndex = "" />
                         
                         <table class="table table-striped table-hover table-condensed">

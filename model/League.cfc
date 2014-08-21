@@ -166,4 +166,16 @@ component accessors="true" {
     	}
     	return ret;
     }
+    
+    public any function getLosingStreaks( Numeric streak ){
+    	var ret = [];
+    	for( var team in getTeams() ){
+    		var type = reReplace( team.getStreak(), '[^a-zA-z]', '', 'all' );
+    		var count = reReplace( team.getStreak(), '[^0-9]', '', 'all' );
+    		if (type == 'l' && count >= streak ){
+    			arrayAppend( ret, team );
+    		}
+    	}
+    	return ret;
+    }
 }

@@ -44,7 +44,7 @@ component accessors="true" {
         league.setWeek(arguments.week);
         league.setLeagueID(arguments.leagueid);
         var teamList = getTeams(arguments.leagueid, arguments.season);
-
+		var streak = getRemoteService().getStreak( leagueId, season);
         var all = [];
 
         for (teamIndex = 1; teamIndex <= listLen(teamList); teamIndex++) {
@@ -68,8 +68,10 @@ component accessors="true" {
             }
 
             var team = createObject("component", "model.Team").init();
+            var teamStreak = structKeyExists( streak, teamName ) ? streak[ teamName ] : "";
             team.setTeamName(teamName);
             team.setRecord(record);
+            team.setStreak( teamStreak );
 			team.setOpponentScore( opponentScore );
             addPlayersToTeam(all, team);
             addPlayersToTeam(bench, team, true);

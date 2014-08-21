@@ -11,6 +11,7 @@ component accessors="true" {
     property name="bench" type="array";
     property name="record";
     property name="opponentScore";
+    property name="streak";
 
     public any function init() {
         setRoster([]);
