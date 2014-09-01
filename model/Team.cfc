@@ -14,12 +14,22 @@ component accessors="true" {
     property name="streak";
     property name="activeDefense";
     property name="activeOffense" type="array";
-    property name="activeKicker";  
+    property name="activeKicker"; 
+    property name="activeQB";
+    property name="benchQBs" type="array"; 
+    property name="bestBenchQB";
+    property name="interceptions";
+    property name="fumbles";
+    property name="score";
+    property name="benchPoints";
 
     public any function init() {
         setRoster([]);
         setBench([]);
 		setActiveOffense( [] );
+		setBenchQBs( [] );
+		setOpponentscore( 0 );
+		setBenchPoints( 0 );
         return this;
     }
 
@@ -31,14 +41,27 @@ component accessors="true" {
 			case 'K':
 			setActiveKicker( player );
 			break;
+			case "QB": case "TQB":
+			setActiveQB( player );
 			default:
 			arrayAppend( getActiveOffense(), player );
+			setFumbles( getFumbles() + player.getFumbles() );
+			setInterceptions( getInterceptions() + player.getInterceptions() );
 		}
+		setScore( getScore() + player.getPoints() );
         arrayAppend(getRoster(), player);
 
     }
 
     public void function addPlayerToBench(IPlayer player) {
+    	switch( player.getPosition() ){
+    		case "QB" : case "TQB":
+    		arrayAppend( getBenchQBs(), player );
+    		if( isNull( getBestBenchQB() ) || player.getPoints() > getBestBenchQB().getPoints() ){
+    			setBestBenchQB( player );
+    		}
+    	}
+    	setBenchPoints( getBenchPoints() + player.getPoints() );
         arrayAppend(getBench(), player);
 
     }
@@ -102,28 +125,11 @@ component accessors="true" {
         return points;
     }
 
-
-    public numeric function getScore() {
-        return getRosterPoints();
-    }
     
     public numeric function getMargin(){
     	return getScore() - getOpponentScore();
     }
 
-    public numeric function getBenchPoints() {
-        var roster = getBench();
-        var playerIndex = "";
-        var points = 0;
-
-        for (playerIndex = 1; playerIndex <= arrayLen(roster); playerIndex++) {
-
-            points+= roster[playerIndex].getPoints();
-
-        }
-
-        return points;
-    }
     
     public numeric function getPointsAllowed(){
     	return getActiveDefense().getPointsAllowed();
@@ -131,6 +137,22 @@ component accessors="true" {
     
     public numeric function getSacks(){
     	return getActiveDefense().getSacks();
+    }
+    
+    public numeric function getStuffs(){
+    	return getActiveDefense().getStuffs();
+    }
+    
+    public Boolean function isBenchQBBetter(){
+    	return !isNull( getActiveQB() ) ? getActiveQB().getPoints() < getBestBenchQBPoints() : false;
+    }
+    
+    public function getBestBenchQBPoints(){
+    	var ret = 0;
+    	if( !isNull( getBestBenchQB() ) ){
+    		ret = getbestBenchQB().getPoints();
+    	}
+    	return ret;
     }
     
 }

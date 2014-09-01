@@ -11,49 +11,60 @@ component accessors="true" {
     property name="leagueName";
     property name="teams";
     property name="week";
+    property name="mostPassingYards";
+    property name="mostPassingYardsTeam";
+    property name="mostRushingYards";
+    property name="mostRushingYardsTeam";
 
     public any function init() {
         setTeams([]);
-
+		variables.mostPassingYards = 0;
+		variables.mostRushingYards = 0;
         return this;
     }
 
     public any function addTeamToLeague(team) {
         arrayAppend(getTeams(), team);
+        setMostPassingYards( team );
+        setMostRushingYards( team );
     }
+    
 
     public any function getMostPassingYards() {
-        var teamIndex = "";
-        var teams = getTeams();
-        var currentTeam = "";
-        var highestTeam = new model.Team();
-
-        for (teamIndex = 1; teamIndex <= arraylen(teams); teamIndex++) {
-            currentTeam = teams[teamIndex];
-
-            if (currentTeam.getPassingYards() GT highestTeam.getPassingYards()) {
-                highestTeam = currentTeam;
-            }
-        }
-
+    	var highestTeam = getMostPassingYardsTeam();
+    	if( isNull( highestTeam ) ){
+    		var teamIndex = "";
+	        var teams = getTeams();
+	        var currentTeam = "";
+	        var highestTeam = new model.Team();
+	
+	        for (teamIndex = 1; teamIndex <= arraylen(teams); teamIndex++) {
+	            currentTeam = teams[teamIndex];
+	
+	            if (currentTeam.getPassingYards() GT highestTeam.getPassingYards()) {
+	                highestTeam = currentTeam;
+	            }
+	        }
+    	}
         return highestTeam;
-
     }
 
     public any function getMostRushingYards() {
-        var teamIndex = "";
-        var teams = getTeams();
-        var currentTeam = "";
-        var highestTeam = new model.Team();
-
-        for (teamIndex = 1; teamIndex <= arraylen(teams); teamIndex++) {
-            currentTeam = teams[teamIndex];
-
-            if (currentTeam.getRushingYards() GT highestTeam.getRushingYards()) {
-                highestTeam = currentTeam;
-            }
-        }
-
+    	var highestTeam = getMostRushingYardsTeam();
+    	if( isNull( highestTeam ) ){
+    		var teamIndex = "";
+	        var teams = getTeams();
+	        var currentTeam = "";
+	        var highestTeam = new model.Team();
+	
+	        for (teamIndex = 1; teamIndex <= arraylen(teams); teamIndex++) {
+	            currentTeam = teams[teamIndex];
+	
+	            if (currentTeam.getRushingYards() GT highestTeam.getRushingYards()) {
+	                highestTeam = currentTeam;
+	            }
+	        }
+    	}
         return highestTeam;
 
     }
@@ -137,7 +148,7 @@ component accessors="true" {
     
     public any function getSmallestMarginOfVictory(){
     	var teams = getTeams();
-    	var smallestTeam = teams[ 1 ];
+    	var smallestTeam = new Team().setOpponentScore(-5000 ) ;
     	for( var currentTeam in teams ){
     		if( currentTeam.getMargin() > 0 && currentTeam.getMargin() < smallestTeam.getMargin()  ){
     			smallestTeam = currentTeam;
@@ -148,7 +159,7 @@ component accessors="true" {
     
     public any function getSmallestMarginOfDefeat(){
     	var teams = getTeams();
-    	var smallestTeam = teams[ 1 ];
+    	var smallestTeam = new Team().setOpponentScore(5000);
     	for( var currentTeam in teams ){
     		if( currentTeam.getMargin() < 0 && abs( currentTeam.getMargin() ) < abs( smallestTeam.getMargin() ) ){
     			smallestTeam = currentTeam;
@@ -173,6 +184,16 @@ component accessors="true" {
     		var type = reReplace( team.getStreak(), '[^a-zA-z]', '', 'all' );
     		var count = reReplace( team.getStreak(), '[^0-9]', '', 'all' );
     		if (type == 'l' && count >= streak ){
+    			arrayAppend( ret, team );
+    		}
+    	}
+    	return ret;
+    }
+    
+    public any function getBadStartingQBs(){
+    	var ret = [];
+    	for( var team in getTeams() ){
+    		if ( team.isBenchQBBetter()  ){
     			arrayAppend( ret, team );
     		}
     	}
@@ -210,5 +231,377 @@ component accessors="true" {
     		}
     	}
     	return mostTeam;
+    }
+    
+     public any function getMostFumbles(){
+    	var teams = getTeams();
+    	var mostTeam = teams[ 1 ];
+    	for( var currentTeam in teams ){
+    		if( currentTeam.getFumbles() > mostTeam.getFumbles() ) {
+    			mostTeam = currentTeam;
+    		}
+    	}
+    	return mostTeam;
+    }
+    
+    public any function getMostinterceptions(){
+    	var teams = getTeams();
+    	var mostTeam = teams[ 1 ];
+    	for( var currentTeam in teams ){
+    		if( currentTeam.getInterceptions() > mostTeam.getinterceptions() ) {
+    			mostTeam = currentTeam;
+    		}
+    	}
+    	return mostTeam;
+    }
+    
+    //get teams sorted by category
+
+    public function onMissingMethod(String methodName, Struct arguments){
+    	if( left( methodName, 5 ) == 'getBy' ){
+    		var teams = duplicate( getTeams() );
+    		switch( methodName ){
+    			case "getByHighestScore":
+	    			arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getScore() GT r.getScore() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getScore() LT r.getScore() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getScore() == teams[1].getScore();
+				    	});
+			    	}
+		    	break;
+		    	case "getByLowestScore":
+		    		arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getScore() LT r.getScore() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getScore() GT r.getScore() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getScore() == teams[1].getScore();
+				    	});
+			    	}
+			    break;
+			    case "getByMostBenchPoints":
+	    			arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getBenchPoints() GT r.getBenchPoints() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getBenchPoints() LT r.getBenchPoints() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getBenchPoints() == teams[1].getBenchPoints();
+				    	});
+			    	}
+		    	break;
+			    case "getByMostPassingYards":
+			    	arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getPassingYards() GT r.getPassingYards() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getPassingYards() LT r.getPassingYards() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getPassingYards() == teams[1].getPassingYards();
+				    	});
+			    	}
+			    break;
+			    case "getByMostRushingYards":
+			    	arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getRushingYards() GT r.getRushingYards() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getRushingYards() LT r.getRushingYards() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getRushingYards() == teams[1].getRushingYards();
+				    	});
+			    	}
+			    break;
+			    case "getByMostReceivingYards":
+			    	arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getReceivingYards() GT r.getReceivingYards() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getReceivingYards() LT r.getReceivingYards() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getReceivingYards() == teams[1].getReceivingYards();
+				    	});
+			    	}
+			    break;
+			    case "getByFewestPointsAllowed":
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getPointsAllowed() LT r.getPointsAllowed() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getPointsAllowed() GT r.getPointsAllowed() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getPointsAllowed() == teams[1].getPointsAllowed();
+				    	});
+			    	}
+			    break;
+			    case "getByMostPointsAllowed":
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getPointsAllowed() GT r.getPointsAllowed() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getPointsAllowed() LT r.getPointsAllowed() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getPointsAllowed() == teams[1].getPointsAllowed();
+				    	});
+			    	}
+			    break;
+			    case "getByMostSacks":
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getSacks() GT r.getSacks() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getSacks() LT r.getSacks() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getSacks() == teams[1].getSacks();
+				    	});
+			    	}
+			    break;
+			    case "getByMostStuffs":
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getStuffs() GT r.getStuffs() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getStuffs() LT r.getStuffs() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getStuffs() == teams[1].getStuffs();
+				    	});
+			    	}
+			    break;
+			    case "getByWidestMarginVictory":
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getMargin() GT r.getMargin() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getMargin() LT r.getMargin() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getMargin() == teams[1].getMargin();
+				    	});
+			    	}
+			    break;
+			    case "getByWidestMarginDefeat":
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getMargin() LT r.getMargin() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getMargin() GT r.getMargin() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getMargin() == teams[1].getMargin();
+				    	});
+			    	}
+			    break;
+			     case "getByNarrowestMarginOfVictory":
+				     teams = arrayFilter( teams, function( team){
+				     	return team.getMargin() >= 0;
+				     } );
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getMargin() LT r.getMargin() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getMargin() GT r.getMargin() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getMargin() == teams[1].getMargin();
+				    	});
+			    	}
+			    break;
+			    case "getByNarrowestMarginOfDefeat":
+				     teams = arrayFilter( teams, function( team){
+				     	return team.getMargin() <= 0;
+				     } );
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getMargin() GT r.getMargin() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getMargin() LT r.getMargin() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getMargin() == teams[1].getMargin();
+				    	});
+			    	}
+			    break;
+			    case "getByMostFumbles":
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getFumbles() GT r.getFumbles() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getFumbles() LT r.getFumbles() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getFumbles() == teams[1].getFumbles();
+				    	});
+			    	}
+			    break;
+			    case "getByMostInterceptions":
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getInterceptions() GT r.getInterceptions() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getInterceptions() LT r.getInterceptions() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getInterceptions() == teams[1].getInterceptions();
+				    	});
+			    	}
+			    break;
+			    case "getByCloseMatch":
+				     teams = arrayFilter( teams, function( team){
+				     	return abs( team.getMargin() ) < 1;
+				     } );
+			    break;
+			    case "getByLosingStreak":
+			    	teams = arrayFilter( teams, function( team ){
+			    		var type = reReplace( team.getStreak(), '[^a-zA-z]', '', 'all' );
+    					var count = reReplace( team.getStreak(), '[^0-9]', '', 'all' );
+    					return type == 'l' && count >= 3;
+			    	});
+			    break;
+			    case "getByBadQB":
+			    	teams = arrayFilter( teams, function( team ){
+			    		return team.isBenchQBBetter();
+			    	});
+			    break;
+			    case "getByHighScoringLosers":
+			    	teams = arrayFilter( teams, function( team ) {
+			    		return team.getMargin() < 0;
+			    	});
+			    	arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getScore() GT r.getScore() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getScore() LT r.getScore() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getScore() == teams[1].getScore();
+				    	});
+			    	}
+			    break;
+			    case "getByRinger":
+			    teams = arrayFilter( teams, function( team ) {
+			    	return !isNull( team.getActiveKicker() ) && !isNull( team.getActiveQB() ) ? team.getActiveKicker().getPoints() > team.getActiveQB().getPoints() : false;
+			    });
+			    break;
+    		}
+    		return teams;
+    	}
+    	
+    	else{
+    		throw( message="No method named #methodname# exists in the League CFC");
+    	}
+    }
+    
+    // private methods
+    private function setMostPassingYards( team ){
+    	if( team.getPassingYards() > variables.mostPassingYards ){
+    		variables.mostPassingYards = team.getPassingYards();
+    		setMostPassingYardsTeam( team );
+    	}
+    }
+    
+    private function setMostRushingYards( team ){
+    	if( team.getRushingYards() > variables.mostRushingYards ){
+    		variables.mostRushingYards = team.getRushingYards();
+    		setMostRushingYardsTeam( team );
+    	}
     }
 }

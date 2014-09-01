@@ -66,6 +66,7 @@ component accessors="true" {
     	var cacheKey = hash("streak" & leagueId & season );
     	var streakData = cacheGet( cacheKey );
     	if( isNull( streakData ) ){
+    		streakData = {};
     		var httpService = new HTTP();
 			httpService.setMethod("get");
 			httpService.setCharset("utf-8");

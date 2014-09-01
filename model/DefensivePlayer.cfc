@@ -31,6 +31,7 @@ component mappedSuperClass="true" accessors="true" implements="IPlayer" {
         setPointsAllowed(0);
         setTouchdowns(0);
         setPoints(0);
+        setStuffs( 0 );
 
         return this;
     }
