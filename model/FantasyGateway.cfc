@@ -13,8 +13,8 @@ component accessors="true" {
         return this;
     }
 
-    public any function getTeams(leagueid, season) {
-        doc = getRemoteService().getTeams(leagueid=arguments.leagueid, season=arguments.season);
+    public any function getTeams(leagueid, season, clearCache) {
+        doc = getRemoteService().getTeams(leagueid=arguments.leagueid, season=arguments.season, clearCache = clearCache);
 
         var links = doc.select(".games-teams-btn li a");
         var link ="";
@@ -27,7 +27,7 @@ component accessors="true" {
 
     }
 
-    public any function getLeague(leagueid, season, week) {
+    public any function getLeague(leagueid, season, week, clearCache=false) {
 
         var teamIndex = 1;
         var doc = "";
@@ -45,12 +45,12 @@ component accessors="true" {
 
         league.setWeek(arguments.week);
         league.setLeagueID(arguments.leagueid);
-        var teamList = getTeams(arguments.leagueid, arguments.season);
-		var streak = getRemoteService().getStreak( leagueId, season);
+        var teamList = getTeams(arguments.leagueid, arguments.season, clearCache);
+		var streak = getRemoteService().getStreak( leagueId, season, clearCache);
         var all = [];
 
         for (teamIndex = 1; teamIndex <= listLen(teamList); teamIndex++) {
-        	teamdata = getRemoteService().getTeamData(leagueid=arguments.leagueid, teamid=listGetAt(teamList, teamIndex), season=arguments.season, week=arguments.week); 
+        	teamdata = getRemoteService().getTeamData(leagueid=arguments.leagueid, teamid=listGetAt(teamList, teamIndex), season=arguments.season, week=arguments.week, clearCache = clearCache ); 
             doc = teamdata.doc;
 			stuffDoc = teamData.stuffDoc;
 			var defenseRow = stuffdoc.select("##playertable_2 tr.pncPlayerRow td.playerTableStat");

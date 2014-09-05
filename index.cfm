@@ -87,7 +87,7 @@
 
 <cfif isNumeric(leagueID) AND isNumeric(URL.season) AND URL.season LTE year(now()) AND isNumeric(URL.week) AND URL.week LTE 17>
 
-    <cfset league = application.gateway.getLeague(leagueId=leagueID, season=url.season, week=url.week) />
+    <cfset league = application.gateway.getLeague(leagueId=leagueID, season=url.season, week=url.week, clearcache = structKeyExists( url, 'reload' ) ) />
     <cfset teams = duplicate( league.getTeams() ) />
     <cfoutput>
       
