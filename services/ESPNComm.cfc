@@ -33,11 +33,10 @@ component accessors="true" {
     }
 
     public any function getTeamData(leagueid, teamid, week, season) {
-		var ret = {};
         var cacheKey = hash(leagueid & teamid & week & season);
-        var teamData = cacheGet(cachekey);
+        var ret = cacheGet(cachekey);
 
-        if (true OR isNull(cachedData)) {
+        if (isNull(ret)) {
             var httpService = new HTTP();
 
             httpService.setMethod("get");
@@ -62,7 +61,7 @@ component accessors="true" {
             cachePut(cacheKey, ret, createTimespan(0,3,0,0));
 
         }
-        return teamData;
+        return ret;
 
 
     }
