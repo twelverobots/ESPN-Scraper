@@ -33,7 +33,7 @@ component accessors="true" {
     }
 
     public any function getTeamData(leagueid, teamid, week, season) {
-
+		var ret = {};
         var cacheKey = hash(leagueid & teamid & week & season);
         var teamData = cacheGet(cachekey);
 
@@ -52,9 +52,14 @@ component accessors="true" {
 
             var result = httpService.send().getPrefix();
 
-            var teamData = getParser().parse(result.filecontent);
+            ret.doc = getParser().parse(result.filecontent);
+            
+            httpService.setUrl( 'http://games.espn.go.com/ffl/boxscorescoring' );
+            httpService.addParam(name="version", type="url", value="scoring");
+            result = httpService.send().getPrefix();
+            ret.stuffDoc = getPArser().parse(result.fileContent);
 
-            cachePut(cacheKey, teamData, createTimespan(0,3,0,0));
+            cachePut(cacheKey, ret, createTimespan(0,3,0,0));
 
         }
         return teamData;
