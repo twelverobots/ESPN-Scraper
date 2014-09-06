@@ -30,6 +30,9 @@ component accessors="true" {
 		setBenchQBs( [] );
 		setOpponentscore( 0 );
 		setBenchPoints( 0 );
+        setFumbles(0);
+        setInterceptions(0);
+        setScore(0);
         return this;
     }
 
