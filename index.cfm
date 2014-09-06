@@ -78,16 +78,21 @@
         </select>
     </div>
       <button type="submit" class="btn btn-primary btn-sm">Get The Awesome</button>
+      <a href="index.cfm?reload=1&leagueId=#url.leagueId#&season=#url.season#&week=#url.week#" class="btn btn-primary" title="Refresh Data"><span class="glyphicon glyphicon-refresh"></span></a>
     </form>
   </div><!-- /.navbar-collapse -->
 </nav>
 
 </cfoutput>
-
+<cfif structKeyExists( url, 'reload' )>
+	<div class="alert alert-info" role="alert">
+      <strong>Data Refreshed</strong> The data cache has been cleared.
+    </div>
+</cfif>
 
 <cfif isNumeric(leagueID) AND isNumeric(URL.season) AND URL.season LTE year(now()) AND isNumeric(URL.week) AND URL.week LTE 17>
 
-    <cfset league = application.gateway.getLeague(leagueId=leagueID, season=url.season, week=url.week) />
+    <cfset league = application.gateway.getLeague(leagueId=leagueID, season=url.season, week=url.week, clearcache = structKeyExists( url, 'reload' ) ) />
     <cfset teams = duplicate( league.getTeams() ) />
     <cfoutput>
       

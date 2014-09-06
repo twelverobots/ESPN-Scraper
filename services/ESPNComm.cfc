@@ -7,11 +7,11 @@ component accessors="true" {
         return this;
     }
 
-    public any function getTeams(leagueid, season) {
-        var cacheKey = hash(leagueid & season);
+    public any function getTeams(leagueid, season, clearCache) {
+        var cacheKey = hash("teamdata" & leagueid & season);
         var teamData = cacheGet(cachekey);
 
-        if (true OR isNull(cachedData)) {
+        if (clearCache || isNull(teamData)) {
             var httpService = new HTTP();
 
             httpService.setMethod("get");
@@ -32,12 +32,11 @@ component accessors="true" {
 
     }
 
-    public any function getTeamData(leagueid, teamid, week, season) {
-
+    public any function getTeamData(leagueid, teamid, week, season, clearCache=false) {
         var cacheKey = hash(leagueid & teamid & week & season);
-        var teamData = cacheGet(cachekey);
+        var ret = cacheGet(cachekey);
 
-        if (true OR isNull(cachedData)) {
+        if (clearCache || isNull(ret)) {
             var httpService = new HTTP();
 
             httpService.setMethod("get");
@@ -52,20 +51,25 @@ component accessors="true" {
 
             var result = httpService.send().getPrefix();
 
-            var teamData = getParser().parse(result.filecontent);
+            ret.doc = getParser().parse(result.filecontent);
+            
+            httpService.setUrl( 'http://games.espn.go.com/ffl/boxscorescoring' );
+            httpService.addParam(name="version", type="url", value="scoring");
+            result = httpService.send().getPrefix();
+            ret.stuffDoc = getPArser().parse(result.fileContent);
 
-            cachePut(cacheKey, teamData, createTimespan(0,3,0,0));
+            cachePut(cacheKey, ret, createTimespan(0,3,0,0));
 
         }
-        return teamData;
+        return ret;
 
 
     }
     
-    public any function getStreak( leagueId, season ){
+    public any function getStreak( leagueId, season, clearCache ){
     	var cacheKey = hash("streak" & leagueId & season );
     	var streakData = cacheGet( cacheKey );
-    	if( isNull( streakData ) ){
+    	if( clearCache || isNull( streakData ) ){
     		streakData = {};
     		var httpService = new HTTP();
 			httpService.setMethod("get");
