@@ -136,7 +136,7 @@ component accessors="true" {
 
         }
 
-        var avg = (yards NEQ 0 OR pCount NEQ 0) ? yards / pCount : 0;
+        var avg = (yards NEQ 0 AND pCount NEQ 0) ? yards / pCount : 0;
 
         return avg;
     }
