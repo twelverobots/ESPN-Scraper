@@ -22,6 +22,7 @@ component accessors="true" {
     property name="fumbles";
     property name="score";
     property name="benchPoints";
+    property name="risks";
 
     public any function init() {
         setRoster([]);
@@ -33,6 +34,7 @@ component accessors="true" {
         setFumbles(0);
         setInterceptions(0);
         setScore(0);
+        setRisks(0);
         return this;
     }
 
@@ -99,6 +101,46 @@ component accessors="true" {
         return yards;
     }
 
+    public numeric function getRushingAverage() {
+        var roster = getRoster();
+        var playerIndex = "";
+        var yards = 0;
+        var pCount = 0;
+
+        for (playerIndex = 1; playerIndex <= arrayLen(roster); playerIndex++) {
+            if (isInstanceOf(roster[playerIndex], "model.OffensivePlayer")) {
+                yards+= roster[playerIndex].getRushingYards();
+                if (roster[playerIndex].getPosition() EQ "RB") {
+                    pCount++;
+                }
+            }
+
+        }
+
+        return yards / pCount;
+    }
+
+    public numeric function getReceivingAverage() {
+        var roster = getRoster();
+        var playerIndex = "";
+        var yards = 0;
+        var pCount = 0;
+
+        for (playerIndex = 1; playerIndex <= arrayLen(roster); playerIndex++) {
+            if (isInstanceOf(roster[playerIndex], "model.OffensivePlayer")) {
+                yards+= roster[playerIndex].getReceivingYards();
+                if ( roster[playerIndex].getPosition() EQ "WR" OR roster[playerIndex].getPosition() EQ "TE" ) {
+                    pCount++;
+                }
+            }
+
+        }
+
+        var avg = (yards NEQ 0 OR pCount NEQ 0) ? yards / pCount : 0;
+
+        return avg;
+    }
+
     public numeric function getReceivingYards() {
         var roster = getRoster();
         var playerIndex = "";
@@ -128,6 +170,32 @@ component accessors="true" {
         return points;
     }
 
+    public numeric function getQBTouchDowns() {
+        var roster = getRoster();
+        var playerIndex = "";
+        var points = 0;
+
+        for (playerIndex = 1; playerIndex <= arrayLen(roster); playerIndex++) {
+            if (roster[playerIndex].getPosition() CONTAINS "QB") {
+                return roster[playerIndex].getPassingTouchdowns();
+            }
+
+        }
+
+        return 0;
+    }
+
+    public numeric function getBenchOutscoredRoster() {
+        return getScore() < getBenchPoints();
+    }
+
+    public numeric function getDefenseTouchDowns() {
+        return getActiveDefense().getTOuchdowns();
+    }
+
+    public numeric function getOffensiveDefense() {
+        return getDefenseTouchDowns() - getQBTouchDowns();
+    }
     
     public numeric function getMargin(){
     	return getScore() - getOpponentScore();
@@ -157,5 +225,8 @@ component accessors="true" {
     	}
     	return ret;
     }
-    
+
+    public function addRisk() {
+        setRisks(getRisks() + 1);
+    }
 }

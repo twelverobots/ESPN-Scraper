@@ -90,13 +90,21 @@ component accessors="true" {
 
     private any function addPlayersToTeam(playerData, team, bench="false") {
         var playerIndex = "";
+        var riskCount = 0;
 
         for (playerIndex=1; playerIndex <= arrayLen(playerData); playerIndex++) {
 
             var name = playerData[playerIndex].child(1).text();
-            
+            var pipes = reReplace(name, "\W", "|", "All");
+
+            if ( right(pipes, 2) EQ "|P" OR right(pipes, 2) EQ "|Q" OR right(pipes, 2) EQ "|D" ) {
+                var risk = true;
+            } else {
+                var risk = false;
+            }
 
             if (NOT len(name) GTE 5) { continue; }
+
 			name = replace( name, ',', '', 'ALL' );
             name = reReplace( name, '[^a-zA-z0-9\/\.\-]', ' ', 'ALL' );
             name = listToArray( name, ' ' );
@@ -168,8 +176,10 @@ component accessors="true" {
 
             if (bench) {
                 team.addPlayerToBench(player);
+
             } else {
                 team.addPlayerToRoster(player);
+                if (risk) team.addRisk();
             }
 
         }

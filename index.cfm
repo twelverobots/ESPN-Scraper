@@ -101,14 +101,15 @@
     	<div class="row">
 		    <v:statPod title="Highest Score" method="getscore()" teams="#league.getByHighestScore()#" />
 		    <v:statPod title="Lowest Score" method="getscore()" teams="#league.getByLowestScore()#" />
-		     <v:statPod title="Most BenchPoints" method="getBenchPoints()" teams="#league.getByMostBenchPoints()#" />
+		    <v:statPod title="Most Bench Points" method="getBenchPoints()" teams="#league.getByMostBenchPoints()#" />
+            <v:statPod title="Bench Points > Roster Points" method="getBenchOutscoredRoster()" teams="#league.getByMostBenchPointsVsRosterPoints()#" />
 		    <v:statPod title="Most Passing Yards" method="getpassingYards()" teams="#league.getByMostPassingYards()#" />
 		    <v:statPod title="Most Rushing Yards" method="getrushingYards()" teams="#league.getByMostRushingYards()#" />
 		    <v:statPod title="Most Receiving Yards" method="getreceivingYards()" teams="#league.getByMostReceivingYards()#" />
 		    <v:statPod title="Fewest Points Allowed by D/ST" method="getpointsAllowed()" teams="#league.getByFewestPointsAllowed()#" />
 		    <v:statPod title="Most Points Allowed by D/ST" method="getpointsAllowed()" teams="#league.getByMostPointsAllowed()#" />
 		    <v:statPod title="Most Sacks" method="getsacks()" teams="#league.getByMostSacks()#" />
-		     <v:statPod title="Most Stuffs" method="getStuffs()" teams="#league.getByMostStuffs()#" />
+		    <v:statPod title="Most Stuffs" method="getStuffs()" teams="#league.getByMostStuffs()#" />
 		    <v:statPod title="Widest Margin of Victory" method="getmargin()" teams="#league.getByWidestMarginVictory()#" />
 		    <v:statPod title="Widest Margin of Defeat" method="getmargin()" teams="#league.getByWidestMarginDefeat()#" />
 		    <v:statPod title="Narrowest Margin of Victory" method="getmargin()" teams="#league.getByNarrowestMarginOfVictory()#" />
@@ -120,6 +121,10 @@
 		    <v:statPod title="Bench QB &gt; Starting QB" method="getBestBenchQBPoints()" teams="#league.getByBadQB()#" />
 	    	<v:statPod title="Kicker &gt; Starting QB" method="getactiveKicker().getPoints()" teams="#league.getByRinger()#" />
 	    	<v:statPod title="3 or more game losing streak" method="getstreak()" teams="#league.getByLosingStreak()#" />
+            <v:statPod title="Most Players P, Q, or D" method="getRisks()" teams="#league.getByMostRisks()#" />
+            <v:statPod title="Worst Rushing Average" method="getRushingAverage()" teams="#league.getByWorstRushingAverage()#" />
+            <v:statPod title="Worst Receiving Average" method="getReceivingAverage()" teams="#league.getByWorstReceivingAverage()#" />
+            <v:statPod title="D/ST TDs > QB TD/s" method="getOffensiveDefense()" teams="#league.getByOffensiveDefense()#" />
 	    </div>
     </div>
     <div class="container"> 

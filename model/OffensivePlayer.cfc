@@ -38,7 +38,6 @@ component mappedSuperClass="true" accessors="true" implements="IPlayer" {
         setPassingYards(0);
         setPassingTouchdowns(0);
         setInterceptions(0);
-
         setRushingAttempts(0);
         setRushingYards(0);
         setRushingTouchdowns(0);

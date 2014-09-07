@@ -576,6 +576,69 @@ component accessors="true" {
 				    	});
 			    	}
 			    break;
+                case "getByMostRisks":
+			    	arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getRisks() GT r.getRisks() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getRisks() LT r.getRisks() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getRisks() == teams[1].getRisks();
+				    	});
+			    	}
+			    break;
+                case "getByWorstRushingAverage":
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getRushingAverage() LT r.getRushingAverage() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getRushingAverage() GT r.getRushingAverage() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getRushingAverage() == teams[1].getRushingAverage();
+				    	});
+			    	}
+			    break;
+                case "getByWorstReceivingAverage":
+				    arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getReceivingAverage() LT r.getReceivingAverage() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getReceivingAverage() GT r.getReceivingAverage() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getReceivingAverage() == teams[1].getReceivingAverage();
+				    	});
+			    	}
+			    break;
+                case "getByOffensiveDefense":
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getQBTouchdowns() < team.getDefenseTouchdowns();
+				    	});
+			    	}
+			    break;
+                case "getByMostBenchPointsVsRosterPoints":
+                    teams = arrayFilter( teams, function( team ){
+			    		return team.getBenchOutscoredRoster();
+			    	});
+			    break;
 			    case "getByRinger":
 			    teams = arrayFilter( teams, function( team ) {
 			    	return !isNull( team.getActiveKicker() ) && !isNull( team.getActiveQB() ) ? team.getActiveKicker().getPoints() > team.getActiveQB().getPoints() : false;
