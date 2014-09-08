@@ -117,7 +117,9 @@ component accessors="true" {
 
         }
 
-        return yards / pCount;
+        var avg = (yards NEQ 0 AND pCount NEQ 0) ? (yards / pCount) : 0;
+
+        return avg;
     }
 
     public numeric function getReceivingAverage() {
@@ -129,14 +131,15 @@ component accessors="true" {
         for (playerIndex = 1; playerIndex <= arrayLen(roster); playerIndex++) {
             if (isInstanceOf(roster[playerIndex], "model.OffensivePlayer")) {
                 yards+= roster[playerIndex].getReceivingYards();
-                if ( roster[playerIndex].getPosition() EQ "WR" OR roster[playerIndex].getPosition() EQ "TE" ) {
+
+                if ( roster[playerIndex].getPosition() CONTAINS "WR" OR roster[playerIndex].getPosition() CONTAINS "TE" ) {
                     pCount++;
                 }
             }
 
         }
 
-        var avg = (yards NEQ 0 AND pCount NEQ 0) ? yards / pCount : 0;
+        var avg = (yards NEQ 0 AND pCount NEQ 0) ? (yards / pCount) : 0;
 
         return avg;
     }

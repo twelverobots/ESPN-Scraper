@@ -20,6 +20,7 @@ component mappedSuperClass="true" accessors="true" implements="IPlayer" {
     property name="pointsAllowed";
     property name="stuffs";
 
+    property name="playProbability";
 
     public any function init() {
 

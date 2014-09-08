@@ -20,6 +20,8 @@ component accessors="true" implements="IPlayer" {
     property name="extraPointAttempts";
     property name="extraPoints";
 
+    property name="playProbability";
+
     public any function init() {
 
         setShortAttempts(0);

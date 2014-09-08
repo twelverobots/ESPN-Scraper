@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<cfsetting requesttimeout="300" /><!DOCTYPE html>
 <html>
   <head>
     <title>ESPN Fantasy Football Scraper</title>

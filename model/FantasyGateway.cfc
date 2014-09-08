@@ -108,6 +108,14 @@ component accessors="true" {
 			name = replace( name, ',', '', 'ALL' );
             name = reReplace( name, '[^a-zA-z0-9\/\.\-]', ' ', 'ALL' );
             name = listToArray( name, ' ' );
+
+            if ( listFind ("P,Q,D,O,SSPD", name[ arrayLen( name ) ] ) ) {
+                var playProbability = name[ arrayLen( name ) ];
+                arrayDeleteAt( name, arrayLen( name ) );
+            } else {
+                var playProbability = "";
+            }
+
             var position = name[ arrayLen( name ) ];
             arrayDeleteAt( name, arrayLen( name ) );
             var teamname = name[ arrayLen( name ) ];
@@ -173,6 +181,7 @@ component accessors="true" {
             player.setPosition(position);
             player.setName(playerName);
             player.setTeam( teamname );
+            player.setPlayProbability(playProbability);
 
             if (bench) {
                 team.addPlayerToBench(player);

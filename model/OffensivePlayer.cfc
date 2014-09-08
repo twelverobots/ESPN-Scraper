@@ -31,6 +31,8 @@ component mappedSuperClass="true" accessors="true" implements="IPlayer" {
     property name="2pc";
     property name="otherTD";
 
+    property name="playProbability";
+
     public any function init() {
 
         setPassingAttempts(0);
