@@ -22,7 +22,6 @@ component accessors="true" {
     property name="fumbles";
     property name="score";
     property name="benchPoints";
-    property name="risks";
 
     public any function init() {
         setRoster([]);
@@ -34,7 +33,7 @@ component accessors="true" {
         setFumbles(0);
         setInterceptions(0);
         setScore(0);
-        setRisks(0);
+
         return this;
     }
 
@@ -229,7 +228,20 @@ component accessors="true" {
     	return ret;
     }
 
-    public function addRisk() {
-        setRisks(getRisks() + 1);
+    public function getRisks() {
+        var roster = getRoster();
+        var playerIndex = "";
+        var risks = 0;
+
+        for (playerIndex = 1; playerIndex <= arrayLen(roster); playerIndex++) {
+
+            if ( listFind( "P,D,Q", roster[playerIndex].getPlayProbability() ) ) {
+                risks++;
+            }
+
+        }
+
+        return risks;
     }
+
 }
