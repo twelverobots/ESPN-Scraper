@@ -295,6 +295,40 @@ component accessors="true" {
 				    	});
 			    	}
 			    break;
+			    case "getByHighestCompositeScore":
+		    		arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getCompositeScore() GT r.getCompositeScore() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getCompositeScore() LT r.getCompositeScore() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getCompositeScore() == teams[1].getCompositeScore();
+				    	});
+			    	}
+			    break;
+			    case "getByLowestCompositeScore":
+		    		arraySort( teams, function( l, r ){
+			    		var ret = 0;
+			    		if( l.getCompositeScore() LT r.getCompositeScore() ){
+			    			ret = -1;
+			    		}
+			    		if( l.getCompositeScore() GT r.getCompositeScore() ){
+			    			ret = 1;
+			    		}
+			    		return ret;
+			    	});
+			    	if( arrayLen( teams ) ){
+			    		teams = arrayFilter( teams, function( team ){
+				    		return team.getCompositeScore() == teams[1].getCompositeScore();
+				    	});
+			    	}
+			    break;
 			    case "getByMostBenchPoints":
 	    			arraySort( teams, function( l, r ){
 			    		var ret = 0;
@@ -642,6 +676,17 @@ component accessors="true" {
 			    case "getByRinger":
 			    teams = arrayFilter( teams, function( team ) {
 			    	return !isNull( team.getActiveKicker() ) && !isNull( team.getActiveQB() ) ? team.getActiveKicker().getPoints() > team.getActiveQB().getPoints() : false;
+			    });
+			    break;
+			    case "getByBenchMargin":
+			    teams = arrayFilter( teams, function( team ) {
+			    	return team.getBenchMargin() > 0;
+			    });
+			    break;
+			    break;
+			    case "getByBenchStarterMargin":
+			    teams = arrayFilter( teams, function( team ) {
+			    	return team.getBenchStarterMargin() > 0;
 			    });
 			    break;
     		}

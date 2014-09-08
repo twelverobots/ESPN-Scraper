@@ -103,6 +103,8 @@
 		    <v:statPod title="Lowest Score" method="getscore()" teams="#league.getByLowestScore()#" />
 		    <v:statPod title="Most Bench Points" method="getBenchPoints()" teams="#league.getByMostBenchPoints()#" />
             <v:statPod title="Bench Points > Roster Points" method="getBenchOutscoredRoster()" teams="#league.getByMostBenchPointsVsRosterPoints()#" />
+            <v:statPod title="Highest Composite Score" method="getCompositeScore()" teams="#league.getByHighestCompositeScore()#" />
+            <v:statPod title="Lowest Composite Score" method="getCompositeScore()" teams="#league.getByLowestCompositeScore()#" />
 		    <v:statPod title="Most Passing Yards" method="getpassingYards()" teams="#league.getByMostPassingYards()#" />
 		    <v:statPod title="Most Rushing Yards" method="getrushingYards()" teams="#league.getByMostRushingYards()#" />
 		    <v:statPod title="Most Receiving Yards" method="getreceivingYards()" teams="#league.getByMostReceivingYards()#" />
@@ -125,6 +127,10 @@
             <v:statPod title="Worst Rushing Average" method="getRushingAverage()" teams="#league.getByWorstRushingAverage()#" />
             <v:statPod title="Worst Receiving Average" method="getReceivingAverage()" teams="#league.getByWorstReceivingAverage()#" />
             <v:statPod title="D/ST TDs > QB TD/s" method="getOffensiveDefense()" teams="#league.getByOffensiveDefense()#" />
+            <v:statPod title="My Bench Beat Your Bench" method="getBenchMargin()" teams="#league.getByBenchMargin()#" />
+            <v:statPod title="My Bench Beat Your Starters" method="getBenchStarterMargin()" teams="#league.getByBenchStarterMargin()#" />
+            
+            
 	    </div>
     </div>
     <div class="container"> 

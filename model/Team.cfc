@@ -22,6 +22,7 @@ component accessors="true" {
     property name="fumbles";
     property name="score";
     property name="benchPoints";
+    property name="opponentBenchPoints";
 
     public any function init() {
         setRoster([]);
@@ -52,7 +53,7 @@ component accessors="true" {
 			setFumbles( getFumbles() + player.getFumbles() );
 			setInterceptions( getInterceptions() + player.getInterceptions() );
 		}
-		setScore( getScore() + player.getPoints() );
+		//setScore( getScore() + player.getPoints() );
         arrayAppend(getRoster(), player);
 
     }
@@ -65,7 +66,7 @@ component accessors="true" {
     			setBestBenchQB( player );
     		}
     	}
-    	setBenchPoints( getBenchPoints() + player.getPoints() );
+    	//setBenchPoints( getBenchPoints() + player.getPoints() );
         arrayAppend(getBench(), player);
 
     }
@@ -242,6 +243,18 @@ component accessors="true" {
         }
 
         return risks;
+    }
+    
+    public function getBenchMargin(){
+    	return getBenchPoints() - getOpponentBenchPoints();
+    }
+    
+    public function getBenchStarterMargin(){
+    	return getBenchPoints() - getOpponentScore();
+    }
+    
+    public function getCompositeScore(){
+    	return getBenchPoints() + getScore();
     }
 
 }

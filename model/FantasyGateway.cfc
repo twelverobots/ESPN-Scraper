@@ -60,7 +60,7 @@ component accessors="true" {
             teamName = doc.select("##teamInfos")[1].child(0).child(0).child(1).child(0).child(0).text();
             tables = doc.select("##playertable_0")[1].parent().getElementsByClass("playerTableTable");
             record = doc.select("##teamInfos")[1].child(0).child(0).child(1).childNodes()[8].text();
-            var opponentScore = doc.select(".totalScore")[2].text();
+            
                         
             all = [];
             bench = [];
@@ -71,13 +71,20 @@ component accessors="true" {
                     bench.addAll(tables[tableIndex].getElementsByClass("pncPlayerRow"));
                 }
             }
-
+            var scores = doc.select( ".danglerBox" );
+			var opponentScore = scores[3].text();
+            var score = scores[1].text();
+            var benchPoints = scores[2].text();
+            var opponentBenchPoints = scores[4].text();
             var team = createObject("component", "model.Team").init();
             var teamStreak = structKeyExists( streak, teamName ) ? streak[ teamName ] : "";
             team.setTeamName(teamName);
+            team.setScore( score );
+            team.setBenchPoints( benchPoints );
             team.setRecord(record);
             team.setStreak( teamStreak );
 			team.setOpponentScore( opponentScore );
+			team.setOpponentBenchPoints( opponentBenchPoints );
             addPlayersToTeam(all, team);
             addPlayersToTeam(bench, team, true);
 			team.getActiveDefense().setStuffs( stuffs );
