@@ -228,6 +228,10 @@ component accessors="true" {
     	}
     	return ret;
     }
+    
+    public function getStartingQBDifference(){
+    	return getActiveQB().getPoints() - getBestBenchQBPoints();
+    }
 
     public function getRisks() {
         var roster = getRoster();

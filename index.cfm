@@ -120,7 +120,7 @@
 		    <v:statPod title="Most Interceptions" method="getinterceptions()" teams="#league.getByMostInterceptions()#" />
 		    <v:statPod title="Win/Loss by less than 1 point" method="getmargin()" teams="#league.getByCloseMatch()#" />
 	    	<v:statPod title="Most Points By Losing Team" method="getscore()" teams="#league.getByHighScoringLosers()#" />
-		    <v:statPod title="Bench QB &gt; Starting QB" method="getBestBenchQBPoints()" teams="#league.getByBadQB()#" />
+		    <v:statPod title="Bench QB &gt; Starting QB" method="getStartingQBDifference()" teams="#league.getByBadQB()#" />
 	    	<v:statPod title="Kicker &gt; Starting QB" method="getactiveKicker().getPoints()" teams="#league.getByRinger()#" />
 	    	<v:statPod title="3 or more game losing streak" method="getstreak()" teams="#league.getByLosingStreak()#" />
             <v:statPod title="Most Players P, Q, or D" method="getRisks()" teams="#league.getByMostRisks()#" />
