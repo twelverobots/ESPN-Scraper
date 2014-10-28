@@ -91,7 +91,7 @@ component accessors="true" {
             league.addTeamToLeague(team);
 
         }
-
+		
         return league;
     }
 
@@ -110,7 +110,7 @@ component accessors="true" {
             name = reReplace( name, '[^a-zA-z0-9\/\.\-]', ' ', 'ALL' );
             name = listToArray( name, ' ' );
 
-            if ( listFind ("P,Q,D,O,SSPD", name[ arrayLen( name ) ] ) ) {
+            if ( listFind ("P,Q,D,O,SSPD,IR", name[ arrayLen( name ) ] ) ) {
                 var playProbability = name[ arrayLen( name ) ];
                 arrayDeleteAt( name, arrayLen( name ) );
             } else {
@@ -123,7 +123,6 @@ component accessors="true" {
             arrayDeleteAt( name, arrayLen( name ) );
             var playerName = arrayToList( name, ' ' );
             var stats = playerData[playerIndex].getElementsByClass("playertableStat");
-
             switch (position) {
 
             case "RB": case "WR": case "TE": case "QB": case "TQB":
@@ -192,7 +191,6 @@ component accessors="true" {
             }
 
         }
-
     }
 
     private numeric function assureNumeric(input) {

@@ -174,11 +174,13 @@
                             <thead>
                                 <tr>
                                     <th>Player</th>
+                                    <th>Team</th>
                                     <th>Pos.</th>
                                     <th>Pts.</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            	
                         <cfloop array="#teamIndex.getBench()#" index="playerIndex">
                             <tr>
                                 <td>#playerIndex.getname()#</td>
