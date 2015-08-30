@@ -34,7 +34,7 @@ component accessors="true" {
         setFumbles(0);
         setInterceptions(0);
         setScore(0);
-
+        setActiveDefense( new DefensivePlayer() );
         return this;
     }
 

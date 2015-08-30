@@ -96,7 +96,10 @@ component accessors="true" {
 			team.setOpponentBenchPoints( opponentBenchPoints );
             addPlayersToTeam(all, team);
             addPlayersToTeam(bench, team, true);
-			team.getActiveDefense().setStuffs( stuffs );
+            if( !isNull( team.getActiveDefense() ) ){
+                team.getActiveDefense().setStuffs( stuffs );
+            }
+			
             league.addTeamToLeague(team);
 
         }
