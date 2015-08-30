@@ -54,7 +54,7 @@ component accessors="true" {
             doc = teamdata.doc;
 			stuffDoc = teamData.stuffDoc;
 			var defenseRow = stuffdoc.select("##playertable_2 tr.pncPlayerRow td.playerTableStat");
-            var stuffs = defenseRow[16].child(0).text() * 10;
+            var stuffs =  arraylen( defenseRow ) >= 16 ? defenseRow[16].child(0).text() * 10 : 0;
             league.setLeagueName(doc.select(".nav-main-breadcrumbs")[1].child(2).text());
 
             teamName = doc.select("##teamInfos")[1].child(0).child(0).child(1).child(0).child(0).text();
