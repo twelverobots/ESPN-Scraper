@@ -683,7 +683,6 @@ component accessors="true" {
 			    	return team.getBenchMargin() > 0;
 			    });
 			    break;
-			    break;
 			    case "getByBenchStarterMargin":
 			    teams = arrayFilter( teams, function( team ) {
 			    	return team.getBenchStarterMargin() > 0;

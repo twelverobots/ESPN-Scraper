@@ -72,10 +72,19 @@ component accessors="true" {
                 }
             }
             var scores = doc.select( ".danglerBox" );
-			var opponentScore = scores[3].text();
-            var score = scores[1].text();
-            var benchPoints = scores[2].text();
-            var opponentBenchPoints = scores[4].text();
+			
+            if (arrayLen(scores) EQ 4){
+                var opponentScore = scores[3].text();
+                var score = scores[1].text();
+                var benchPoints = scores[2].text();
+                var opponentBenchPoints = scores[4].text();
+            } else {
+                var opponentScore = scores[2].text();
+                var score = scores[1].text();
+                var benchPoints = 0;
+                var opponentBenchPoints = 0;
+            }
+            
             var team = createObject("component", "model.Team").init();
             var teamStreak = structKeyExists( streak, teamName ) ? streak[ teamName ] : "";
             team.setTeamName(teamName);
