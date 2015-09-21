@@ -94,40 +94,49 @@
 
     <cfset league = application.gateway.getLeague(leagueId=leagueID, season=url.season, week=url.week, clearcache = structKeyExists( url, 'reload' ) ) />
     <cfset teams = duplicate( league.getTeams() ) />
+    <cfset trophyData = {} />
+    <cfif fileExists( expandPath( '/data/' & leagueId & '/' & url.season & '/trophies.json') ) >
+        <cfset fileData = deserializeJSON( fileRead( expandPath( '/data/' & leagueId & '/' & url.season & '/trophies.json') ) )  />
+        <cfif structKeyExists( fileData, url.week-1 )>
+            <cfset trophyData = fileData[ url.week-1 ] />
+        </cfif>
+    </cfif>
     <cfoutput>
-      
-    <div class="container">
+     <div class="container">
     	 <h3>Week #league.getWeek()#  - #league.getLeagueName()#</h3>
+         <button type="button" id="saveWinner" class="btn btn-primary btn-sm">Save Winner Info <i class="glyphicon glyphicon-floppy-disk"></i></button>
     	<div class="row">
-		    <v:statPod title="Highest Score" method="getscore()" teams="#league.getByHighestScore()#" />
-		    <v:statPod title="Lowest Score" method="getscore()" teams="#league.getByLowestScore()#" />
-		    <v:statPod title="Most Bench Points" method="getBenchPoints()" teams="#league.getByMostBenchPoints()#" />
-            <v:statPod title="Bench Points > Roster Points" method="getBenchOutscoredRoster()" teams="#league.getByMostBenchPointsVsRosterPoints()#" />
-            <v:statPod title="Highest Composite Score" method="getCompositeScore()" teams="#league.getByHighestCompositeScore()#" />
-            <v:statPod title="Lowest Composite Score" method="getCompositeScore()" teams="#league.getByLowestCompositeScore()#" />
-		    <v:statPod title="Most Passing Yards" method="getpassingYards()" teams="#league.getByMostPassingYards()#" />
-		    <v:statPod title="Most Rushing Yards" method="getrushingYards()" teams="#league.getByMostRushingYards()#" />
-		    <v:statPod title="Most Receiving Yards" method="getreceivingYards()" teams="#league.getByMostReceivingYards()#" />
-		    <v:statPod title="Fewest Points Allowed by D/ST" method="getpointsAllowed()" teams="#league.getByFewestPointsAllowed()#" />
-		    <v:statPod title="Most Points Allowed by D/ST" method="getpointsAllowed()" teams="#league.getByMostPointsAllowed()#" />
-		    <v:statPod title="Most Sacks" method="getsacks()" teams="#league.getByMostSacks()#" />
-		    <v:statPod title="Most Stuffs" method="getStuffs()" teams="#league.getByMostStuffs()#" />
-		    <v:statPod title="Widest Margin of Victory" method="getmargin()" teams="#league.getByWidestMarginVictory()#" />
-		    <v:statPod title="Widest Margin of Defeat" method="getmargin()" teams="#league.getByWidestMarginDefeat()#" />
-		    <v:statPod title="Narrowest Margin of Victory" method="getmargin()" teams="#league.getByNarrowestMarginOfVictory()#" />
-		    <v:statPod title="Narrowest Margin of Defeat" method="getmargin()" teams="#league.getByNarrowestMarginOfDefeat()#" />
-		    <v:statPod title="Most Fumbles" method="getfumbles()" teams="#league.getByMostFumbles()#" />
-		    <v:statPod title="Most Interceptions" method="getinterceptions()" teams="#league.getByMostInterceptions()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Highest Score" method="getscore()" teams="#league.getByHighestScore()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Lowest Score" method="getscore()" teams="#league.getByLowestScore()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Most Bench Points" method="getBenchPoints()" teams="#league.getByMostBenchPoints()#" />
+            <v:statPod trophyData="#trophydata#"  title="Highest Composite Score" method="getCompositeScore()" teams="#league.getByHighestCompositeScore()#" />
+            <v:statPod trophyData="#trophydata#"  title="Lowest Composite Score" method="getCompositeScore()" teams="#league.getByLowestCompositeScore()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Most Passing Yards" method="getpassingYards()" teams="#league.getByMostPassingYards()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Most Rushing Yards" method="getrushingYards()" teams="#league.getByMostRushingYards()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Most Receiving Yards" method="getreceivingYards()" teams="#league.getByMostReceivingYards()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Fewest Points Allowed by D/ST" method="getpointsAllowed()" teams="#league.getByFewestPointsAllowed()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Most Points Allowed by D/ST" method="getpointsAllowed()" teams="#league.getByMostPointsAllowed()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Most Sacks" method="getsacks()" teams="#league.getByMostSacks()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Most Stuffs" method="getStuffs()" teams="#league.getByMostStuffs()#" />
+            <v:statPod trophyData="#trophydata#"  title="Most Fumbles" method="getfumbles()" teams="#league.getByMostFumbles()#" />
+            <v:statPod trophyData="#trophydata#"  title="Most Interceptions" method="getinterceptions()" teams="#league.getByMostInterceptions()#" />
+            <v:statPod trophyData="#trophydata#"  title="Worst Rushing Average" method="getRushingAverage()" teams="#league.getByWorstRushingAverage()#" />
+            <v:statPod trophyData="#trophydata#"  title="Worst Receiving Average" method="getReceivingAverage()" teams="#league.getByWorstReceivingAverage()#" />
+            <v:statPod trophyData="#trophydata#"  title="Most Players P, Q, or D" method="getRisks()" teams="#league.getByMostRisks()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Widest Margin of Victory" method="getmargin()" teams="#league.getByWidestMarginVictory()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Widest Margin of Defeat" method="getmargin()" teams="#league.getByWidestMarginDefeat()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Narrowest Margin of Victory" method="getmargin()" teams="#league.getByNarrowestMarginOfVictory()#" />
+		    <v:statPod trophyData="#trophydata#"  title="Narrowest Margin of Defeat" method="getmargin()" teams="#league.getByNarrowestMarginOfDefeat()#" />
+            <v:statPod trophyData="#trophydata#"  title="Most Points By Losing Team" method="getscore()" teams="#league.getByHighScoringLosers()#" />
+            <v:statPod trophyData="#trophydata#"  title="My Bench Beat Your Bench" method="getBenchMargin()" teams="#league.getByBenchMargin()#" />
+                <v:statPod trophyData="#trophydata#"  title="Kicker &gt; Starting QB" method="getactiveKicker().getPoints()" teams="#league.getByRinger()#" />
 		    <v:statPod title="Win/Loss by less than 1 point" method="getmargin()" teams="#league.getByCloseMatch()#" />
-	    	<v:statPod title="Most Points By Losing Team" method="getscore()" teams="#league.getByHighScoringLosers()#" />
+	    	
 		    <v:statPod title="Bench QB &gt; Starting QB" method="getStartingQBDifference()" teams="#league.getByBadQB()#" />
-	    	<v:statPod title="Kicker &gt; Starting QB" method="getactiveKicker().getPoints()" teams="#league.getByRinger()#" />
+	    	
 	    	<v:statPod title="3 or more game losing streak" method="getstreak()" teams="#league.getByLosingStreak()#" />
-            <v:statPod title="Most Players P, Q, or D" method="getRisks()" teams="#league.getByMostRisks()#" />
-            <v:statPod title="Worst Rushing Average" method="getRushingAverage()" teams="#league.getByWorstRushingAverage()#" />
-            <v:statPod title="Worst Receiving Average" method="getReceivingAverage()" teams="#league.getByWorstReceivingAverage()#" />
-            <v:statPod title="D/ST TDs > QB TD/s" method="getOffensiveDefense()" teams="#league.getByOffensiveDefense()#" />
-            <v:statPod title="My Bench Beat Your Bench" method="getBenchMargin()" teams="#league.getByBenchMargin()#" />
+            <v:statPod title="Bench Points > Roster Points" method="getBenchOutscoredRoster()" teams="#league.getByMostBenchPointsVsRosterPoints()#" />
+            <v:statPod title="D/ST TDs &gt; QB TD/s" method="getOffensiveDefense()" teams="#league.getByOffensiveDefense()#" />
             <v:statPod title="My Bench Beat Your Starters" method="getBenchStarterMargin()" teams="#league.getByBenchStarterMargin()#" />
             
             
@@ -227,5 +236,13 @@
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script src="/js/custom.js"></script>
+<script>
+    $( document ).ready( function() {
+       $( "#saveWinner" ).click( function() {
+        <cfoutput>saveWinners( #url.leagueId#, #url.season#, #url.week# );
+       }) </cfoutput>
+    })
+</script>
 </body>
 </html>

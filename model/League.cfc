@@ -272,11 +272,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getScore() == teams[1].getScore();
 				    	});
-			    	}
+			    	}**/
 		    	break;
 		    	case "getByLowestScore":
 		    		arraySort( teams, function( l, r ){
@@ -289,11 +289,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getScore() == teams[1].getScore();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByHighestCompositeScore":
 		    		arraySort( teams, function( l, r ){
@@ -306,11 +306,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getCompositeScore() == teams[1].getCompositeScore();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByLowestCompositeScore":
 		    		arraySort( teams, function( l, r ){
@@ -323,11 +323,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getCompositeScore() == teams[1].getCompositeScore();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByMostBenchPoints":
 	    			arraySort( teams, function( l, r ){
@@ -340,11 +340,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getBenchPoints() == teams[1].getBenchPoints();
 				    	});
-			    	}
+			    	}**/
 		    	break;
 			    case "getByMostPassingYards":
 			    	arraySort( teams, function( l, r ){
@@ -357,11 +357,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getPassingYards() == teams[1].getPassingYards();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByMostRushingYards":
 			    	arraySort( teams, function( l, r ){
@@ -374,11 +374,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getRushingYards() == teams[1].getRushingYards();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByMostReceivingYards":
 			    	arraySort( teams, function( l, r ){
@@ -391,11 +391,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getReceivingYards() == teams[1].getReceivingYards();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByFewestPointsAllowed":
 				    arraySort( teams, function( l, r ){
@@ -408,11 +408,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getPointsAllowed() == teams[1].getPointsAllowed();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByMostPointsAllowed":
 				    arraySort( teams, function( l, r ){
@@ -425,11 +425,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getPointsAllowed() == teams[1].getPointsAllowed();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByMostSacks":
 				    arraySort( teams, function( l, r ){
@@ -442,11 +442,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getSacks() == teams[1].getSacks();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByMostStuffs":
 				    arraySort( teams, function( l, r ){
@@ -459,13 +459,16 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getStuffs() == teams[1].getStuffs();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByWidestMarginVictory":
+			    	teams = arrayFilter( teams, function( team){
+					     	return team.getMargin() >= 0;
+					     } );
 				    arraySort( teams, function( l, r ){
 			    		var ret = 0;
 			    		if( l.getMargin() GT r.getMargin() ){
@@ -476,13 +479,16 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getMargin() == teams[1].getMargin();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByWidestMarginDefeat":
+			    	teams = arrayFilter( teams, function( team){
+					     	return team.getMargin() <= 0;
+					     } );
 				    arraySort( teams, function( l, r ){
 			    		var ret = 0;
 			    		if( l.getMargin() LT r.getMargin() ){
@@ -493,11 +499,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getMargin() == teams[1].getMargin();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			     case "getByNarrowestMarginOfVictory":
 				     teams = arrayFilter( teams, function( team){
@@ -513,11 +519,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getMargin() == teams[1].getMargin();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByNarrowestMarginOfDefeat":
 				     teams = arrayFilter( teams, function( team){
@@ -533,11 +539,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getMargin() == teams[1].getMargin();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByMostFumbles":
 				    arraySort( teams, function( l, r ){
@@ -550,11 +556,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getFumbles() == teams[1].getFumbles();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByMostInterceptions":
 				    arraySort( teams, function( l, r ){
@@ -567,11 +573,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getInterceptions() == teams[1].getInterceptions();
 				    	});
-			    	}
+			    	}**/
 			    break;
 			    case "getByCloseMatch":
 				     teams = arrayFilter( teams, function( team){
@@ -604,11 +610,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getScore() == teams[1].getScore();
 				    	});
-			    	}
+			    	}**/
 			    break;
                 case "getByMostRisks":
 			    	arraySort( teams, function( l, r ){
@@ -621,11 +627,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getRisks() == teams[1].getRisks();
 				    	});
-			    	}
+			    	}**/
 			    break;
                 case "getByWorstRushingAverage":
 				    arraySort( teams, function( l, r ){
@@ -638,11 +644,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getRushingAverage() == teams[1].getRushingAverage();
 				    	});
-			    	}
+			    	}**/
 			    break;
                 case "getByWorstReceivingAverage":
 				    arraySort( teams, function( l, r ){
@@ -655,11 +661,11 @@ component accessors="true" {
 			    		}
 			    		return ret;
 			    	});
-			    	if( arrayLen( teams ) ){
+			    	/**if( arrayLen( teams ) ){
 			    		teams = arrayFilter( teams, function( team ){
 				    		return team.getReceivingAverage() == teams[1].getReceivingAverage();
 				    	});
-			    	}
+			    	}**/
 			    break;
                 case "getByOffensiveDefense":
 			    	if( arrayLen( teams ) ){

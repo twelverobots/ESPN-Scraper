@@ -10,7 +10,7 @@ component {
     this.name = "ESPNScrape";
     this.mappings["/services"] = getDirectoryFromPath(getCurrentTemplatePath()) & "services";
     this.mappings["/model"] = getDirectoryFromPath(getCurrentTemplatePath()) & "model";
-
+    this.mappings["/data"] = getDirectoryFromPath(getCurrentTemplatePath()) & "data";
     public void function onApplicationStart() {
 
         var jsoup = createObject("java", "org.jsoup.Jsoup");
