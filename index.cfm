@@ -128,16 +128,16 @@
 		    <v:statPod trophyData="#trophydata#"  title="Narrowest Margin of Victory" method="getmargin()" teams="#league.getByNarrowestMarginOfVictory()#" />
 		    <v:statPod trophyData="#trophydata#"  title="Narrowest Margin of Defeat" method="getmargin()" teams="#league.getByNarrowestMarginOfDefeat()#" />
             <v:statPod trophyData="#trophydata#"  title="Most Points By Losing Team" method="getscore()" teams="#league.getByHighScoringLosers()#" />
-            <v:statPod trophyData="#trophydata#"  title="My Bench Beat Your Bench" method="getBenchMargin()" teams="#league.getByBenchMargin()#" />
+            <v:statPod trophyData="#trophydata#"  title="My Bench Beat Your Bench" method="getBenchMargin()" trackPrevious="false" teams="#league.getByBenchMargin()#" />
                 <v:statPod trophyData="#trophydata#"  title="Kicker &gt; Starting QB" method="getactiveKicker().getPoints()" teams="#league.getByRinger()#" />
-		    <v:statPod title="Win/Loss by less than 1 point" method="getmargin()" teams="#league.getByCloseMatch()#" />
+		    <v:statPod title="Win/Loss by less than 1 point" method="getmargin()" trackPrevious="false" teams="#league.getByCloseMatch()#" />
 	    	
-		    <v:statPod title="Bench QB &gt; Starting QB" method="getStartingQBDifference()" teams="#league.getByBadQB()#" />
+		    <v:statPod title="Bench QB &gt; Starting QB" method="getStartingQBDifference()" trackPrevious="false" teams="#league.getByBadQB()#" />
 	    	
-	    	<v:statPod title="3 or more game losing streak" method="getstreak()" teams="#league.getByLosingStreak()#" />
-            <v:statPod title="Bench Points > Roster Points" method="getBenchOutscoredRoster()" teams="#league.getByMostBenchPointsVsRosterPoints()#" />
-            <v:statPod title="D/ST TDs &gt; QB TD/s" method="getOffensiveDefense()" teams="#league.getByOffensiveDefense()#" />
-            <v:statPod title="My Bench Beat Your Starters" method="getBenchStarterMargin()" teams="#league.getByBenchStarterMargin()#" />
+	    	<v:statPod title="3 or more game losing streak" method="getstreak()" trackPrevious="false" teams="#league.getByLosingStreak()#" />
+            <v:statPod title="Bench Points > Roster Points" method="getBenchOutscoredRoster()" trackPrevious="false" teams="#league.getByMostBenchPointsVsRosterPoints()#" />
+            <v:statPod title="D/ST TDs &gt; QB TD/s" method="getOffensiveDefense()" trackPrevious="false" teams="#league.getByOffensiveDefense()#" />
+            <v:statPod title="My Bench Beat Your Starters" method="getBenchStarterMargin()" trackPrevious="false" teams="#league.getByBenchStarterMargin()#" />
             
             
 	    </div>

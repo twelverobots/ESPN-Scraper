@@ -2,6 +2,7 @@
 <cfparam name="attributes.method" />
 <cfparam name="attributes.teams" default="#[]#" />
 <cfparam name="attributes.trophyData" default="#{}#" />
+<cfparam name="attributes.trackPrevious" default="true" />
 <cfset prevWinner = [] />
 <cfif structKeyExists( attributes.trophyData, attributes.title )>
 	<cfset prevWinner = attributes.trophyData[ attributes.title ] />
@@ -18,20 +19,20 @@
 			<cfset first =  -9999999999 />
 			<cfloop array="#attributes.teams#" index="team" >
 				
-				<cfif arrayFind( prevWinner, team.getTeamName() )EQ 1>
+				<cfif attributes.trackPrevious AND arrayFind( prevWinner, team.getTeamName() )EQ 1>
 					<cfset winner = false />
 					<cfset count-- />
 				<cfelse>
 					<cfset first = first EQ -9999999999 ? evaluate("team.#attributes.method#") : first  />
 					<cfset winner = count EQ 1 OR count GT 1 AND first EQ evaluate("team.#attributes.method#")  ? true : false />
 				</cfif>
-				<tr <cfif winner>class="success"</cfif>>
+				<tr <cfif winner OR !attributes.trackPrevious>class="success"</cfif>>
 					<td>
-						<cfif winner>
+						<cfif winner OR !attributes.trackPrevious>
 							<i class="glyphicon glyphicon-star"></i>
 						</cfif>
 					</td>
-					<td <cfif winner>class="winnerName"</cfif>>#team.getTeamName()#</td>
+					<td <cfif winner OR !attributes.trackPrevious>class="winnerName"</cfif>>#team.getTeamName()#</td>
 					<td >#numberFormat( evaluate("team.#attributes.method#"), '999.00' )#</td>
 				</tr>
 				<cfset count++ />
