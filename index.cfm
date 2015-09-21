@@ -129,7 +129,7 @@
 		    <v:statPod trophyData="#trophydata#"  title="Narrowest Margin of Defeat" method="getmargin()" teams="#league.getByNarrowestMarginOfDefeat()#" />
             <v:statPod trophyData="#trophydata#"  title="Most Points By Losing Team" method="getscore()" teams="#league.getByHighScoringLosers()#" />
             <v:statPod trophyData="#trophydata#"  title="My Bench Beat Your Bench" method="getBenchMargin()" trackPrevious="false" teams="#league.getByBenchMargin()#" />
-                <v:statPod trophyData="#trophydata#"  title="Kicker &gt; Starting QB" method="getactiveKicker().getPoints()" teams="#league.getByRinger()#" />
+                <v:statPod trophyData="#trophydata#"  title="Kicker &gt; Starting QB" method="getactiveKicker().getPoints()" trackPrevious="false" teams="#league.getByRinger()#" />
 		    <v:statPod title="Win/Loss by less than 1 point" method="getmargin()" trackPrevious="false" teams="#league.getByCloseMatch()#" />
 	    	
 		    <v:statPod title="Bench QB &gt; Starting QB" method="getStartingQBDifference()" trackPrevious="false" teams="#league.getByBadQB()#" />

@@ -155,7 +155,7 @@ component accessors="true" {
                 player.set2PC(assureNumeric(stats[11].text()));
                 player.setFumbles(assureNumeric(stats[12].text()));
                 player.setOtherTD(assureNumeric(stats[13].text()));
-                player.setPoints(assureNumeric(stats[14].text()));
+                player.setPoints(assureNumeric(stats[arraylen( stats )].text()));
                 break;
             case "D/ST":
                 player = createObject("component", "model.DefensivePlayer").init();
