@@ -84,11 +84,6 @@
 </nav>
 
 </cfoutput>
-<cfif structKeyExists( url, 'reload' )>
-	<div class="alert alert-info" role="alert">
-      <strong>Data Refreshed</strong> The data cache has been cleared.
-    </div>
-</cfif>
 
 <cfif isNumeric(leagueID) AND isNumeric(URL.season) AND URL.season LTE year(now()) AND isNumeric(URL.week) AND URL.week LTE 17>
 
@@ -103,8 +98,23 @@
     </cfif>
     <cfoutput>
      <div class="container">
+        <cfif structKeyExists( url, 'reload' )>
+            <div class="alert alert-info" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong>Data Refreshed</strong> The data cache has been cleared.
+            </div>
+        </cfif>
+        <div class="alert alert-success hide" id="saveSuccess" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Success!</strong> Trophy data saved.
+        </div>
+        <div class="alert alert-danger hide" id="saveError" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Oops...</strong> Something went amuck and we could not save the data. Try again
+        </div>
     	 <h3>Week #league.getWeek()#  - #league.getLeagueName()#</h3>
          <button type="button" id="saveWinner" class="btn btn-primary btn-sm">Save Winner Info <i class="glyphicon glyphicon-floppy-disk"></i></button>
+         
     	<div class="row">
 		    <v:statPod trophyData="#trophydata#"  title="Highest Score" method="getscore()" teams="#league.getByHighestScore()#" />
 		    <v:statPod trophyData="#trophydata#"  title="Lowest Score" method="getscore()" teams="#league.getByLowestScore()#" />

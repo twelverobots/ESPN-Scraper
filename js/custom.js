@@ -17,7 +17,14 @@ saveWinners = function( league, season, week ){
 	var oPost = {
 		data: data,
 		success: function( result ){
-			console.log( result );
+			if( result.success ){
+				$('#saveSuccess').removeClass( 'hide' );
+				$('#saveError').addClass( 'hide' );
+			}
+			else{
+				$('#saveSuccess').addClass( 'hide' );
+				$('#saveError').removeClass( 'hide' );
+			}
 		}
 	};
 	$.ajax( oPost );

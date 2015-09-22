@@ -33,7 +33,7 @@
 						</cfif>
 					</td>
 					<td <cfif winner OR !attributes.trackPrevious>class="winnerName"</cfif>>#team.getTeamName()#</td>
-					<td >#numberFormat( evaluate("team.#attributes.method#"), '999.00' )#</td>
+					<td class="text-right">#numberFormat( evaluate("team.#attributes.method#"), '999.00' )#</td>
 				</tr>
 				<cfset count++ />
 			</cfloop>
