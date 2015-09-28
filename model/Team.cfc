@@ -23,6 +23,7 @@ component accessors="true" {
     property name="score";
     property name="benchPoints";
     property name="opponentBenchPoints";
+    property name="teamId";
 
     public any function init() {
         setRoster([]);

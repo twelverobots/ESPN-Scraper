@@ -50,7 +50,8 @@ component accessors="true" {
         var all = [];
 
         for (teamIndex = 1; teamIndex <= listLen(teamList); teamIndex++) {
-        	teamdata = getRemoteService().getTeamData(leagueid=arguments.leagueid, teamid=listGetAt(teamList, teamIndex), season=arguments.season, week=arguments.week, clearCache = clearCache ); 
+            var teamId = listGetAt(teamList, teamIndex);
+        	teamdata = getRemoteService().getTeamData(leagueid=arguments.leagueid, teamid=teamId, season=arguments.season, week=arguments.week, clearCache = clearCache ); 
             doc = teamdata.doc;
 			stuffDoc = teamData.stuffDoc;
 			var defenseRow = stuffdoc.select("##playertable_2 tr.pncPlayerRow td.playerTableStat");
@@ -87,6 +88,7 @@ component accessors="true" {
             
             var team = createObject("component", "model.Team").init();
             var teamStreak = structKeyExists( streak, teamName ) ? streak[ teamName ] : "";
+            team.setTeamId( teamId );
             team.setTeamName(teamName);
             team.setScore( score );
             team.setBenchPoints( benchPoints );

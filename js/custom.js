@@ -3,10 +3,11 @@ saveWinners = function( league, season, week ){
 	$( ".stats-pod" ).each( function() {
 		var myData = [];
 		$( this ).find( '.winnerName' ).each( function() {
-			myData.push( $( this ).html() );
+			myData.push( $( this ).data( 'teamid' ) );
 		} );
 		data.trophies[$( this ).find( '.trophyTitle' ).html() ] = myData ;
 	});
+	//console.log( data );
 	data.trophies = JSON.stringify( data.trophies );
 	$.ajaxSetup({
 		url: '/services/remote.cfc',
