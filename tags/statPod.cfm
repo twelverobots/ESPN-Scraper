@@ -33,7 +33,9 @@
 						</cfif>
 					</td>
 					<td <cfif winner OR !attributes.trackPrevious>class="winnerName" data-teamId="#team.getTeamId()#"</cfif>>#team.getTeamName()#</td>
-					<td class="text-right">#numberFormat( evaluate("team.#attributes.method#"), '999.00' )#</td>
+					<cfset myVal = evaluate("team.#attributes.method#") />
+					<td class="text-right">
+						#isNumeric( myVal ) ? numberFormat( myVal , '999.00' ) : myVal#</td>
 				</tr>
 				<cfset count++ />
 			</cfloop>
