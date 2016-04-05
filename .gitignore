@@ -16,3 +16,4 @@ app/bower_components
 /settings.xml
 /db
 draft.cfm
+*.json

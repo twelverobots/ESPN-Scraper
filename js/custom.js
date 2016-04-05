@@ -10,7 +10,7 @@ saveWinners = function( league, season, week ){
 	//console.log( data );
 	data.trophies = JSON.stringify( data.trophies );
 	$.ajaxSetup({
-		url: '/services/remote.cfc',
+		url: 'services/remote.cfc',
 		dataType: 'json',
 		type: 'POST'
 	});
